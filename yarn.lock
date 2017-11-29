@@ -6,6 +6,16 @@
   version "8.0.53"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.53.tgz#396b35af826fa66aad472c8cb7b8d5e277f4e6d8"
 
+"@types/react-native@^0.50.7":
+  version "0.50.7"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.50.7.tgz#4c18bb14aa08f11934f539d2b8dcb2f1a6b88bd8"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react@*", "@types/react@^16.0.25":
+  version "16.0.25"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.25.tgz#bf696b83fe480c5e0eff4335ee39ebc95884a1ed"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -2195,6 +2205,10 @@ hoist-non-react-statics@^1.0.5:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
 
+hoist-non-react-statics@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.3.1.tgz#343db84c6018c650778898240135a1420ee22ce0"
+
 home-or-tmp@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/home-or-tmp/-/home-or-tmp-2.0.0.tgz#e36c3f2d2cae7d746a857e38d18d5f32a7882db8"
@@ -3433,6 +3447,16 @@ minimist@~0.0.1:
   dependencies:
     minimist "0.0.8"
 
+mobx-react@^4.3.5:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-4.3.5.tgz#76853f2f2ef4a6f960c374bcd9f01e875929c04c"
+  dependencies:
+    hoist-non-react-statics "^2.3.1"
+
+mobx@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.3.2.tgz#e912a9f7c82b2df69f1abe6515ecaa551828a024"
+
 morgan@~1.6.1:
   version "1.6.1"
   resolved "https://registry.yarnpkg.com/morgan/-/morgan-1.6.1.tgz#5fd818398c6819cba28a7cd6664f292fe1c0bbf2"
@@ -4113,9 +4137,9 @@ react-devtools-core@^2.5.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-"react-native-drawer@git+https://github.com/GeekyAnts/react-native-drawer.git":
+"react-native-drawer@https://github.com/GeekyAnts/react-native-drawer":
   version "2.3.0"
-  resolved "git+https://github.com/GeekyAnts/react-native-drawer.git#8d9078516d177c9cb02d2579a6860706d2370d25"
+  resolved "https://github.com/GeekyAnts/react-native-drawer#8d9078516d177c9cb02d2579a6860706d2370d25"
   dependencies:
     prop-types "^15.5.8"
     tween-functions "^1.0.1"
@@ -4126,13 +4150,17 @@ react-native-easy-grid@0.1.15:
   dependencies:
     lodash "^4.11.1"
 
-"react-native-keyboard-aware-scroll-view@git+https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view.git":
+"react-native-keyboard-aware-scroll-view@https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view":
   version "0.2.9"
-  resolved "git+https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view.git#f4805f254d6cc8e3329f5fb224944401f66655db"
+  resolved "https://github.com/GeekyAnts/react-native-keyboard-aware-scroll-view#f4805f254d6cc8e3329f5fb224944401f66655db"
   dependencies:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
     react-timer-mixin "^0.13.3"
+
+react-native-keychain@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-keychain/-/react-native-keychain-1.2.1.tgz#6b2bed32ca0460d641974193715d18c808b0f12f"
 
 react-native-vector-icons@~4.4.2:
   version "4.4.2"

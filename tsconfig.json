@@ -15,7 +15,8 @@
         "strictNullChecks": false,
         "noUnusedLocals": true,
         "outDir": "./App",
-        "types": ["node"]
+        "types": ["node"],
+        "skipLibCheck": true
     },
     "include": ["src"],
     "exclude": ["node_modules", "**/*.spec.ts?", "**/*.d.ts?", "App"],
