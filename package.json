@@ -1,0 +1,52 @@
+{
+    "name": "PocketGithub",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "build": "rimraf App && tsc",
+        "start": "node node_modules/react-native/local-cli/cli.js start",
+        "lint": "tslint -e node_modules typings -c .tslintrc.json src/**/*.ts",
+        "lint-staged:css": "stylelint --syntax css",
+        "lint-staged:less": "stylelint --syntax less",
+        "lint-staged:scss": "stylelint --syntax scss",
+        "lint-staged": "lint-staged",
+        "lint-staged:ts": "tslint --fix -c .tslintrc.json",
+        "test": "jest"
+    },
+    "lint-staged": {
+        "src/**/*.{ts,tsx}": [
+            "lint-staged:ts"
+        ],
+        "src/**/*.css": [
+            "lint-staged:css"
+        ],
+        "src/**/*.less": [
+            "lint-staged:less"
+        ],
+        "src/**/*.scss": [
+            "lint-staged:scss"
+        ]
+    },
+    "pre-commit": "lint-staged",
+    "dependencies": {
+        "react": "^16.2.0",
+        "react-native": "^0.50.4"
+    },
+    "devDependencies": {
+        "@types/node": "^8.0.53",
+        "babel-jest": "21.2.0",
+        "babel-preset-react-native": "4.0.0",
+        "jest": "21.2.1",
+        "lint-staged": "^5.0.0",
+        "pre-commit": "^1.2.2",
+        "react-test-renderer": "16.0.0",
+        "stylelint": "^8.3.1",
+        "tslint": "^5.8.0",
+        "tslint-eslint-rules": "^4.1.1",
+        "tslint-react": "^3.2.0",
+        "typescript": "^2.6.2"
+    },
+    "jest": {
+        "preset": "react-native"
+    }
+}
