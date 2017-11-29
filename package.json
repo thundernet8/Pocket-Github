@@ -1,5 +1,5 @@
 {
-    "name": "PocketGithub",
+    "name": "pocketgithub",
     "version": "0.0.1",
     "private": true,
     "scripts": {
@@ -29,6 +29,7 @@
     },
     "pre-commit": "lint-staged",
     "dependencies": {
+        "native-base": "^2.3.3",
         "react": "^16.2.0",
         "react-native": "^0.50.4"
     },
