@@ -1,17 +1,58 @@
 import { observable, action } from "mobx";
+import { ApolloClient } from "apollo-client";
+import { HttpLink } from "apollo-link-http";
+import { setContext } from "apollo-link-context";
+import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import ICredential from "../data/interface/ICredential";
 
 export default class GlobalStore {
     private static instance: GlobalStore;
+    private apollo: ApolloClient<NormalizedCacheObject>;
 
-    public static getInstance() {
+    public static getInstance(credential?: ICredential) {
         if (GlobalStore.instance) {
+            GlobalStore.instance.credential = credential;
             return GlobalStore.instance;
         }
-        return new GlobalStore();
+        const instance = new GlobalStore(credential);
+        GlobalStore.instance = instance;
+        return instance;
     }
 
-    private constructor() {}
+    private constructor(credential?: ICredential) {
+        this.setCredential(credential);
+    }
+
+    /**
+     * Apollo Client
+     */
+    initApollo = () => {
+        const { password } = this.credential;
+        const authLink = setContext((_, { headers }) => {
+            // return the headers to the context so httpLink can read them
+            return {
+                headers: {
+                    ...headers,
+                    authorization: password ? `Bearer ${password}` : null
+                }
+            };
+        });
+
+        const httpLink = new HttpLink({
+            uri: "https://api.github.com/graphql",
+            credentials: "same-origin"
+        });
+
+        const client = new ApolloClient({
+            link: authLink.concat(httpLink),
+            cache: new InMemoryCache()
+        });
+        this.apollo = client;
+    };
+
+    getApollo = () => {
+        return this.apollo;
+    };
 
     /**
      * Credentials
@@ -21,6 +62,7 @@ export default class GlobalStore {
     @action
     setCredential = (credential: ICredential) => {
         this.credential = credential;
+        this.initApollo();
     };
 
     getToken = () => {

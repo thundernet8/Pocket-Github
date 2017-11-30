@@ -2,21 +2,18 @@ import React, { Component } from "react";
 import { Container, Header, Content, Form, Item, Input } from "native-base";
 import { Text } from "react-native";
 import * as Keychain from "react-native-keychain";
-import query from "./data/graphQL/demo.graphql";
+import * as Storage from "./utils/Storage";
+import GlobalStore from "./store/GlobalStore";
 
 export default class App extends Component<{}, {}> {
     componentDidMount() {
+        // 顶级入口初始化本地存储
+        Storage.init();
+
         Keychain.getGenericPassword()
             .then(credentials => {
                 if (typeof credentials !== "boolean") {
-                    console.debug(
-                        "Credentials successfully loaded for user " +
-                            credentials.username +
-                            ":" +
-                            credentials.password +
-                            ":" +
-                            credentials.service
-                    );
+                    GlobalStore.getInstance(credentials);
                 } else {
                     throw new Error("Credentials has not been set.");
                 }
@@ -26,12 +23,10 @@ export default class App extends Component<{}, {}> {
                     "Keychain couldn't be accessed! Maybe no value set?",
                     error
                 );
-                // Keychain.setGenericPassword("thundernet8", "123456");
             });
     }
 
     render() {
-        console.warn(query);
         return (
             <Container>
                 <Header>

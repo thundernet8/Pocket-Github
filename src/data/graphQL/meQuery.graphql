@@ -1,4 +1,4 @@
-query demo($number_of_repos: Int!, $name: String!) {
+query me($number_of_repos: Int!, $name: String!) {
     viewer {
         name
         publicKeys(last: $number_of_repos) {

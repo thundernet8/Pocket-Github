@@ -6,12 +6,13 @@
     "author": "wuxueqian <wuxueqian2010@hotmail.com>",
     "license": "MIT",
     "private": true,
-    "keywords": ["Github App", "React-Native"],
+    "keywords": [
+        "Github App",
+        "React-Native"
+    ],
     "scripts": {
-        "build":
-            "rimraf App && tsc && cp ./src/data/graphQL/*.graphql ./App/data/graphQL/",
-        "graphql":
-            "cd src/data/graphQL && apollo-codegen generate *.graphql --schema schema.json --target typescript --output graphQL.ts",
+        "build": "rimraf App && tsc && cp ./src/data/graphQL/*.graphql ./App/data/graphQL/",
+        "graphql": "cd src/data/graphQL && apollo-codegen generate *.graphql --schema schema.json --target typescript --output graphQL.ts",
         "start": "node node_modules/react-native/local-cli/cli.js start",
         "android": "react-native run-android",
         "ios": "react-native run-ios",
@@ -24,14 +25,27 @@
         "test": "jest"
     },
     "lint-staged": {
-        "src/**/*.{ts,tsx}": ["lint-staged:ts"],
-        "src/**/*.css": ["lint-staged:css"],
-        "src/**/*.less": ["lint-staged:less"],
-        "src/**/*.scss": ["lint-staged:scss"]
+        "src/**/*.{ts,tsx}": [
+            "lint-staged:ts"
+        ],
+        "src/**/*.css": [
+            "lint-staged:css"
+        ],
+        "src/**/*.less": [
+            "lint-staged:less"
+        ],
+        "src/**/*.scss": [
+            "lint-staged:scss"
+        ]
     },
     "pre-commit": "lint-staged",
     "dependencies": {
+        "apollo-cache-inmemory": "^1.1.1",
+        "apollo-client": "^2.0.3",
+        "apollo-link-context": "^1.0.1",
+        "apollo-link-http": "^1.2.0",
         "axios": "^0.17.1",
+        "graphql": "^0.11.7",
         "graphql-tag": "^2.5.0",
         "mobx": "^3.3.2",
         "mobx-react": "^4.3.5",
@@ -39,7 +53,8 @@
         "react": "^16.2.0",
         "react-apollo": "^2.0.1",
         "react-native": "^0.50.4",
-        "react-native-keychain": "^1.2.1"
+        "react-native-keychain": "^1.2.1",
+        "react-native-storage": "^0.2.2"
     },
     "devDependencies": {
         "@types/node": "^8.0.53",
