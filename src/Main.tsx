@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import { Container, Header, Content, Form, Item, Input } from "native-base";
-// import { Platform, StyleSheet, Text, View } from "react-native";
+import { Text } from "react-native";
 import * as Keychain from "react-native-keychain";
+import query from "./data/graphQL/demo.graphql";
 
 export default class App extends Component<{}, {}> {
     componentDidMount() {
@@ -10,23 +11,32 @@ export default class App extends Component<{}, {}> {
                 if (typeof credentials !== "boolean") {
                     console.debug(
                         "Credentials successfully loaded for user " +
-                            credentials.username
+                            credentials.username +
+                            ":" +
+                            credentials.password +
+                            ":" +
+                            credentials.service
                     );
+                } else {
+                    throw new Error("Credentials has not been set.");
                 }
             })
             .catch(error => {
-                console.debug(
+                console.warn(
                     "Keychain couldn't be accessed! Maybe no value set?",
                     error
                 );
+                // Keychain.setGenericPassword("thundernet8", "123456");
             });
     }
 
     render() {
-        console.debug("xxx");
+        console.warn(query);
         return (
             <Container>
-                <Header>Login</Header>
+                <Header>
+                    <Text>Login</Text>
+                </Header>
                 <Content>
                     <Form>
                         <Item>
