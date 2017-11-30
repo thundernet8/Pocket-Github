@@ -6,13 +6,12 @@
     "author": "wuxueqian <wuxueqian2010@hotmail.com>",
     "license": "MIT",
     "private": true,
-    "keywords": [
-        "Github App",
-        "React-Native"
-    ],
+    "keywords": ["Github App", "React-Native"],
     "scripts": {
-        "build": "rimraf App && tsc && cp ./src/data/graphQL/*.graphql ./App/data/graphQL/",
-        "graphql": "cd src/data/graphQL && apollo-codegen generate *.graphql --schema schema.json --target typescript --output graphQL.ts",
+        "build":
+            "rimraf App && tsc && cp ./src/data/graphQL/*.graphql ./App/data/graphQL/",
+        "gql":
+            "cd src/data/graphQL && apollo-codegen generate *.graphql --schema schema.json --target typescript --output types.ts",
         "start": "node node_modules/react-native/local-cli/cli.js start",
         "android": "react-native run-android",
         "ios": "react-native run-ios",
@@ -25,18 +24,10 @@
         "test": "jest"
     },
     "lint-staged": {
-        "src/**/*.{ts,tsx}": [
-            "lint-staged:ts"
-        ],
-        "src/**/*.css": [
-            "lint-staged:css"
-        ],
-        "src/**/*.less": [
-            "lint-staged:less"
-        ],
-        "src/**/*.scss": [
-            "lint-staged:scss"
-        ]
+        "src/**/*.{ts,tsx}": ["lint-staged:ts"],
+        "src/**/*.css": ["lint-staged:css"],
+        "src/**/*.less": ["lint-staged:less"],
+        "src/**/*.scss": ["lint-staged:scss"]
     },
     "pre-commit": "lint-staged",
     "dependencies": {

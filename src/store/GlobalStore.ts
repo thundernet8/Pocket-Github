@@ -1,33 +1,36 @@
 import { observable, action } from "mobx";
-import { ApolloClient } from "apollo-client";
+import { ApolloClient, ApolloQueryResult } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
+import gql from "graphql-tag";
+import * as Keychain from "react-native-keychain";
 import ICredential from "../data/interface/ICredential";
+import Screen from "../data/enum/Screen";
+import { meQuery } from "../data/graphQL/types";
+import meQueryTag from "../data/graphQL/meQuery.graphql";
 
 export default class GlobalStore {
     private static instance: GlobalStore;
     private apollo: ApolloClient<NormalizedCacheObject>;
+    public static appName = "PocketGithub";
 
-    public static getInstance(credential?: ICredential) {
-        if (GlobalStore.instance) {
-            GlobalStore.instance.credential = credential;
-            return GlobalStore.instance;
+    public static getInstance() {
+        if (!GlobalStore.instance) {
+            GlobalStore.instance = new GlobalStore();
         }
-        const instance = new GlobalStore(credential);
-        GlobalStore.instance = instance;
-        return instance;
+        return GlobalStore.instance;
     }
 
-    private constructor(credential?: ICredential) {
-        this.setCredential(credential);
+    private constructor() {
+        this.initApollo();
     }
 
     /**
      * Apollo Client
      */
     initApollo = () => {
-        const { password } = this.credential;
+        const { password } = this.credential || ({} as ICredential);
         const authLink = setContext((_, { headers }) => {
             // return the headers to the context so httpLink can read them
             return {
@@ -69,17 +72,62 @@ export default class GlobalStore {
         return this.credential.password;
     };
 
+    checkLogin = () => {
+        Keychain.getGenericPassword(GlobalStore.appName)
+            .then(credentials => {
+                if (typeof credentials !== "boolean") {
+                    this.setCredential(credentials);
+                } else {
+                    throw new Error("Credentials has not been set.");
+                }
+            })
+            .catch(error => {
+                console.warn(
+                    "Keychain couldn't be accessed! Maybe no value set?",
+                    error
+                );
+            });
+    };
+
     /**
      * @param username Github用户名
      * @param password Github密码或Access Token(注: 使用了两步验证时必须使用Access Token作为密码)
      */
     @action
     signIn = (username: string, password: string) => {
-        // TODO
+        Keychain.setGenericPassword(username, password, GlobalStore.appName);
+        this.setCredential({
+            username,
+            password,
+            service: GlobalStore.appName
+        });
+
+        // TODO login
+        this.apollo
+            .query<meQuery>({
+                query: gql(meQueryTag),
+                variables: {
+                    avatar_size: 64
+                }
+            })
+            .then((data: ApolloQueryResult<meQuery>) => {
+                console.log(data);
+                this.me = data.data.viewer;
+            })
+            .catch(error => {
+                console.warn(error);
+            });
     };
 
     @action
     signOut = () => {
         this.setCredential(null);
     };
+
+    @observable me: meQuery["viewer"];
+
+    /**
+     * Screen
+     */
+    @observable currentScreen: Screen = Screen.WELCOME;
 }
