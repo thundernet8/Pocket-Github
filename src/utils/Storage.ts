@@ -27,5 +27,5 @@ export function init() {
         sync
     });
 
-    (<any>global).storage = storage;
+    (<any> global).storage = storage;
 }
