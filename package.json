@@ -16,18 +16,12 @@
         "android": "react-native run-android",
         "ios": "react-native run-ios",
         "lint": "tslint -e node_modules typings -c .tslintrc.json src/**/*.ts",
-        "lint-staged:css": "stylelint --syntax css",
-        "lint-staged:less": "stylelint --syntax less",
-        "lint-staged:scss": "stylelint --syntax scss",
         "lint-staged": "lint-staged",
         "lint-staged:ts": "tslint --fix -c .tslintrc.json",
         "test": "jest"
     },
     "lint-staged": {
-        "src/**/*.{ts,tsx}": ["lint-staged:ts"],
-        "src/**/*.css": ["lint-staged:css"],
-        "src/**/*.less": ["lint-staged:less"],
-        "src/**/*.scss": ["lint-staged:scss"]
+        "src/**/*.{ts,tsx}": ["lint-staged:ts"]
     },
     "pre-commit": "lint-staged",
     "dependencies": {
