@@ -1,21 +1,39 @@
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 import * as React from "react";
-import { View, Text } from "react-native";
-export default class FeedsTabScreen extends React.Component {
+import { View, Text, Image } from "react-native";
+import { observer } from "mobx-react";
+import GlobalStore from "../../../store/GlobalStore";
+let FeedsTabScreen = class FeedsTabScreen extends React.Component {
     constructor(props) {
         super(props);
     }
     componentDidMount() {
-        this.props.navigator.showModal({
-            screen: "screen.Login",
-            title: "Login",
-            passProps: {},
-            navigatorStyle: { navBarHidden: true },
-            animationType: "slide-up"
-        });
+        console.log("componentDidMount");
+    }
+    componentWillUnmount() {
+        console.log("componentWillUnmount");
     }
     render() {
+        const globalStore = GlobalStore.getInstance();
+        const { me } = globalStore;
         return (React.createElement(View, null,
-            React.createElement(Text, null, "FeedsTabScreen")));
+            React.createElement(Text, null,
+                "FeedsTabScreen - ",
+                me && me.bio),
+            me && (React.createElement(Image, { source: { uri: me.avatarUrl }, style: { width: 400, height: 400 } }))));
     }
-}
+};
 FeedsTabScreen.navigatorButtons = {};
+FeedsTabScreen = __decorate([
+    observer,
+    __metadata("design:paramtypes", [Object])
+], FeedsTabScreen);
+export default FeedsTabScreen;

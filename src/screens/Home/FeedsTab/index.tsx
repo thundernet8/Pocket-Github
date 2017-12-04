@@ -1,11 +1,15 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
+import { observer } from "mobx-react";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
+import GlobalStore from "../../../store/GlobalStore";
+// import FeedsStore from "../../../store/FeedsStore";
 
 interface FeedsTabScreenProps extends IBaseScreenProps {}
 
 interface FeedsTabScreenState {}
 
+@observer
 export default class FeedsTabScreen extends React.Component<
     FeedsTabScreenProps,
     FeedsTabScreenState
@@ -17,19 +21,26 @@ export default class FeedsTabScreen extends React.Component<
     }
 
     componentDidMount() {
-        this.props.navigator.showModal({
-            screen: "screen.Login",
-            title: "Login",
-            passProps: {},
-            navigatorStyle: { navBarHidden: true },
-            animationType: "slide-up"
-        });
+        console.log("componentDidMount");
+    }
+
+    componentWillUnmount() {
+        console.log("componentWillUnmount");
     }
 
     render() {
+        const globalStore = GlobalStore.getInstance();
+        const { me } = globalStore;
+
         return (
             <View>
-                <Text>FeedsTabScreen</Text>
+                <Text>FeedsTabScreen - {me && me.bio}</Text>
+                {me && (
+                    <Image
+                        source={{ uri: me.avatarUrl }}
+                        style={{ width: 400, height: 400 }}
+                    />
+                )}
             </View>
         );
     }

@@ -1,14 +1,22 @@
-import { observable, action } from "mobx";
+import { observable, action, computed } from "mobx";
+import { AppState } from "react-native";
 import { ApolloClient, ApolloQueryResult } from "apollo-client";
 import { HttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import gql from "graphql-tag";
 import * as Keychain from "react-native-keychain";
+import {
+    ScreenVisibilityListener as RNNScreenVisibilityListener,
+    Navigation
+} from "react-native-navigation";
 import ICredential from "../data/interface/ICredential";
 import Screen from "../data/enum/Screen";
 import { meQuery } from "../data/graphQL/types";
 import meQueryTag from "../data/graphQL/meQuery.graphql";
+import FeedsStore from "../store/FeedsStore";
+
+require("../utils/Promise");
 
 export default class GlobalStore {
     private static instance: GlobalStore;
@@ -24,7 +32,15 @@ export default class GlobalStore {
 
     private constructor() {
         this.initApollo();
+        this.registerListener();
     }
+
+    public static dispose = () => {
+        if (GlobalStore.instance) {
+            GlobalStore.instance.unregisterListener();
+            GlobalStore.instance = null;
+        }
+    };
 
     /**
      * Apollo Client
@@ -91,21 +107,51 @@ export default class GlobalStore {
             });
     };
 
-    /**
-     * @param username Github用户名
-     * @param password Github密码或Access Token(注: 使用了两步验证时必须使用Access Token作为密码)
-     */
+    @computed
+    get isLogged() {
+        const { credential } = this;
+        return credential && credential.password;
+    }
+
+    @observable isDoingLogin: boolean = false;
+    @observable username: string = "";
+    @observable password: string = ""; // Github密码或Access Token
+    @computed
+    get loginBtnDisabled() {
+        const { isDoingLogin, username, password } = this;
+        return isDoingLogin || !username || !password;
+    }
+
     @action
-    signIn = (username: string, password: string) => {
-        Keychain.setGenericPassword(username, password, GlobalStore.appName);
-        this.setCredential({
-            username,
-            password,
-            service: GlobalStore.appName
-        });
+    inputUsername = (username: string) => {
+        console.log(username);
+        this.username = username;
+    };
+
+    @action
+    inputPassword = (password: string) => {
+        this.password = password;
+    };
+
+    @action
+    signIn = () => {
+        const { username, password } = this;
+        if (password) {
+            Keychain.setGenericPassword(
+                username,
+                password,
+                GlobalStore.appName
+            );
+            this.setCredential({
+                username,
+                password,
+                service: GlobalStore.appName
+            });
+        }
 
         // TODO login
-        this.apollo
+        this.isDoingLogin = true;
+        return this.apollo
             .query<meQuery>({
                 query: gql(meQueryTag),
                 variables: {
@@ -115,10 +161,13 @@ export default class GlobalStore {
             .then((data: ApolloQueryResult<meQuery>) => {
                 console.log(data);
                 this.me = data.data.viewer;
-                // Navigation.dismissAllModals
             })
             .catch(error => {
                 console.warn(error);
+                throw error;
+            })
+            .finally(() => {
+                this.isDoingLogin = false;
             });
     };
 
@@ -130,7 +179,67 @@ export default class GlobalStore {
     @observable me: meQuery["viewer"];
 
     /**
-     * Screen
+     * Modal show login screen
      */
-    @observable currentScreen: Screen = Screen.WELCOME;
+    private showLoginScreen = () => {
+        Navigation.showModal({
+            screen: Screen.LOGIN,
+            title: "Login",
+            passProps: {},
+            navigatorStyle: { navBarHidden: true },
+            animationType: "slide-up"
+        });
+    };
+
+    /**
+     * AppState listener
+     */
+    @observable appStateActive: boolean = true;
+
+    private handleAppStateChange = () => {
+        this.appStateActive = AppState.currentState === "active";
+    };
+
+    /**
+     * Screen and Screen visibility
+     */
+    @observable currentScreen: Screen = Screen.HOME;
+
+    private screenVisibilityListener: RNNScreenVisibilityListener;
+
+    private registerListener = () => {
+        this.screenVisibilityListener = new RNNScreenVisibilityListener({
+            didAppear: ({ screen, startTime, endTime, commandType }) => {
+                console.log(
+                    "screenVisibility",
+                    `Screen ${screen} displayed in ${endTime -
+                        startTime} millis after [${commandType}]`
+                );
+                if (commandType === "InitialScreen" && !this.isLogged) {
+                    this.showLoginScreen();
+                } else {
+                    switch (screen) {
+                        case Screen.HOMEFeedsTab:
+                            FeedsStore.getInstance().maybeInit();
+                            break;
+                        // TODO more
+                        default:
+                            console.log("default");
+                    }
+                }
+            }
+        });
+
+        this.screenVisibilityListener.register();
+        AppState.addEventListener("change", this.handleAppStateChange);
+    };
+
+    private unregisterListener = () => {
+        if (this.screenVisibilityListener) {
+            this.screenVisibilityListener.unregister();
+            this.screenVisibilityListener = null;
+        }
+
+        AppState.removeEventListener("change", this.handleAppStateChange);
+    };
 }

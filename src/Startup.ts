@@ -6,14 +6,14 @@ import Screen from "./data/enum/Screen";
 import GlobalStore from "./store/GlobalStore";
 
 export default async function startup() {
+    // 注册视图
+    RegisterScreens();
+
     // 初始化本地存储
     Storage.init();
 
     // 实例化Base Store
     GlobalStore.getInstance().checkLogin();
-
-    // 注册视图
-    RegisterScreens();
 
     // 准备图标资源
     const icons = await Promise.all([

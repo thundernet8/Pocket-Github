@@ -14,9 +14,9 @@ import Screen from "./data/enum/Screen";
 import GlobalStore from "./store/GlobalStore";
 export default function startup() {
     return __awaiter(this, void 0, void 0, function* () {
+        RegisterScreens();
         Storage.init();
         GlobalStore.getInstance().checkLogin();
-        RegisterScreens();
         const icons = yield Promise.all([
             Icon.getImageSource("logo-rss", 30),
             Icon.getImageSource("md-information-circle", 30),
