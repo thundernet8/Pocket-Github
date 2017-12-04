@@ -1,5 +1,4 @@
 enum Screen {
-    WELCOME = "screen.Welcome",
     LOGIN = "screen.Login",
     HOME = "screen.Home",
     HOMEFeedsTab = "screen.Home.Feeds",
