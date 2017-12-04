@@ -73,10 +73,11 @@ export default class GlobalStore {
     };
 
     checkLogin = () => {
-        Keychain.getGenericPassword(GlobalStore.appName)
+        return Keychain.getGenericPassword(GlobalStore.appName)
             .then(credentials => {
                 if (typeof credentials !== "boolean") {
                     this.setCredential(credentials);
+                    return true;
                 } else {
                     throw new Error("Credentials has not been set.");
                 }
@@ -86,6 +87,7 @@ export default class GlobalStore {
                     "Keychain couldn't be accessed! Maybe no value set?",
                     error
                 );
+                return false;
             });
     };
 
@@ -113,6 +115,7 @@ export default class GlobalStore {
             .then((data: ApolloQueryResult<meQuery>) => {
                 console.log(data);
                 this.me = data.data.viewer;
+                // Navigation.dismissAllModals
             })
             .catch(error => {
                 console.warn(error);

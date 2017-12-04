@@ -46,10 +46,11 @@ export default class GlobalStore {
             return this.credential.password;
         };
         this.checkLogin = () => {
-            Keychain.getGenericPassword(GlobalStore.appName)
+            return Keychain.getGenericPassword(GlobalStore.appName)
                 .then(credentials => {
                 if (typeof credentials !== "boolean") {
                     this.setCredential(credentials);
+                    return true;
                 }
                 else {
                     throw new Error("Credentials has not been set.");
@@ -57,6 +58,7 @@ export default class GlobalStore {
             })
                 .catch(error => {
                 console.warn("Keychain couldn't be accessed! Maybe no value set?", error);
+                return false;
             });
         };
         this.signIn = (username, password) => {
@@ -117,5 +119,5 @@ __decorate([
 ], GlobalStore.prototype, "me", void 0);
 __decorate([
     observable,
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], GlobalStore.prototype, "currentScreen", void 0);

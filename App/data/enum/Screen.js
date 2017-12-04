@@ -1,6 +1,10 @@
 var Screen;
 (function (Screen) {
-    Screen[Screen["WELCOME"] = 0] = "WELCOME";
-    Screen[Screen["HOME"] = 1] = "HOME";
+    Screen["WELCOME"] = "screen.Welcome";
+    Screen["LOGIN"] = "screen.Login";
+    Screen["HOME"] = "screen.Home";
+    Screen["HOMEFeedsTab"] = "screen.Home.Feeds";
+    Screen["HOMEIssuesTab"] = "screen.Home.Issues";
+    Screen["HOMEPRsTab"] = "screen.Home.PullRequests";
 })(Screen || (Screen = {}));
 export default Screen;

@@ -8,11 +8,9 @@ import React, { Component } from "react";
 import { observer } from "mobx-react";
 import { Container, Header, Content, Form, Item, Input } from "native-base";
 import { Text } from "react-native";
-import * as Storage from "./utils/Storage";
 import GlobalStore from "./store/GlobalStore";
 let App = class App extends Component {
     componentDidMount() {
-        Storage.init();
         GlobalStore.getInstance().checkLogin();
         GlobalStore.getInstance().signIn("", "");
     }
