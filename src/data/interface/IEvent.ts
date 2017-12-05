@@ -43,4 +43,4 @@ export default interface IEvent {
     // "public": true,
     created_at: string;
     org: IOrg;
-};
+}

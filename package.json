@@ -22,7 +22,9 @@
         "test": "jest"
     },
     "lint-staged": {
-        "src/**/*.{ts,tsx}": ["lint-staged:ts"]
+        "src/**/*.{ts,tsx}": [
+            "lint-staged:ts"
+        ]
     },
     "pre-commit": "lint-staged",
     "dependencies": {
@@ -39,6 +41,7 @@
         "react": "^16.2.0",
         "react-apollo": "^2.0.1",
         "react-native": "^0.50.4",
+        "react-native-elements": "^0.18.4",
         "react-native-keychain": "^1.2.1",
         "react-native-navigation": "^1.1.298",
         "react-native-storage": "^0.2.2",
