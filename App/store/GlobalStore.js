@@ -135,6 +135,8 @@ export default class GlobalStore {
                             case Screen.HOMEFeedsTab:
                                 FeedsStore.getInstance().maybeInit();
                                 break;
+                            default:
+                                console.log("default");
                         }
                     }
                 }

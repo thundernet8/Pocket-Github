@@ -52,14 +52,19 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         height: "100%",
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     },
     content: {
+        alignSelf: "stretch",
+        paddingLeft: 10,
+        paddingRight: 10,
         position: "relative",
         top: "50%",
         marginTop: -100,
-        paddingLeft: 10,
-        paddingRight: 10
+        height: 200
     },
     loginBtn: {
         marginTop: 20,
