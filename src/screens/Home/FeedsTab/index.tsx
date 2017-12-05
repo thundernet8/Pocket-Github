@@ -1,7 +1,7 @@
 import * as React from "react";
 import { observer } from "mobx-react";
 import { FlatList, View, Text } from "react-native";
-import { Container, Content, Header, List, ListItem } from "native-base";
+import { Container, Content, Header, List } from "native-base";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
 // import GlobalStore from "../../../store/GlobalStore";
 import FeedsStore from "../../../store/FeedsStore";

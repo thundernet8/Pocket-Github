@@ -10,12 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import * as React from "react";
 import { observer } from "mobx-react";
 import { FlatList, View, Text } from "react-native";
+import { Container, Content, Header, List } from "native-base";
 import FeedsStore from "../../../store/FeedsStore";
-let FeedsTabScreen = class FeedsTabScreen extends React.Component {
+let FeedsTabScreen = class FeedsTabScreen extends React.PureComponent {
     constructor(props) {
         super(props);
         this.renderEventItem = ({ item }) => {
-            return (React.createElement(View, null,
+            return (React.createElement(View, { key: item.id },
                 React.createElement(Text, null,
                     item.id,
                     ">")));
@@ -30,7 +31,11 @@ let FeedsTabScreen = class FeedsTabScreen extends React.Component {
     }
     render() {
         const { events } = this.store;
-        return React.createElement(FlatList, { data: events, renderItem: this.renderEventItem });
+        return (React.createElement(Container, null,
+            React.createElement(Header, null),
+            React.createElement(Content, null,
+                React.createElement(List, null,
+                    React.createElement(FlatList, { data: events, renderItem: this.renderEventItem })))));
     }
 };
 FeedsTabScreen.navigatorButtons = {};
