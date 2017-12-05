@@ -95,7 +95,9 @@ export default class GlobalStore {
             })
                 .then((data) => {
                 console.log(data);
-                this.me = data.data.viewer;
+                const viewer = data.data.viewer;
+                this.me = viewer;
+                return viewer;
             })
                 .catch(error => {
                 console.warn(error);
@@ -167,6 +169,12 @@ export default class GlobalStore {
     get loginBtnDisabled() {
         const { isDoingLogin, username, password } = this;
         return isDoingLogin || !username || !password;
+    }
+    mePromise() {
+        if (this.me) {
+            return Promise.resolve(this.me);
+        }
+        return this.signIn();
     }
 }
 GlobalStore.appName = "PocketGithub";

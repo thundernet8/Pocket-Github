@@ -13,7 +13,13 @@ export default async function startup() {
     Storage.init();
 
     // 实例化Base Store
-    GlobalStore.getInstance().checkLogin();
+    const globalStore = GlobalStore.getInstance();
+    globalStore.checkLogin().then(result => {
+        if (result) {
+            // 已有本地credentials直接请求API获取基本信息
+            globalStore.signIn();
+        }
+    });
 
     // 准备图标资源
     const icons = await Promise.all([

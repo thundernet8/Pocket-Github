@@ -1,5 +1,4 @@
 import axios from "axios";
-import https from "https";
 import qs from "qs";
 import GlobalStore from "../store/GlobalStore";
 
@@ -11,7 +10,7 @@ import GlobalStore from "../store/GlobalStore";
  * @param params
  * @param contentType
  */
-export function Request<T>(
+function Request<T>(
     httpMethod: string,
     path: string,
     params: any,
@@ -21,7 +20,7 @@ export function Request<T>(
 
     const headers: any = {
         Accept: "*/*",
-        Authorization: "Bearer" + GlobalStore.getInstance().getToken(),
+        Authorization: "Bearer " + GlobalStore.getInstance().getToken(),
         "Content-type": contentType
     };
 
@@ -29,9 +28,6 @@ export function Request<T>(
         baseURL: "https://api.github.com/",
         timeout: 60000,
         withCredentials: true,
-        httpsAgent: new https.Agent({
-            rejectUnauthorized: false
-        }),
         headers
     });
 
@@ -68,25 +64,25 @@ export function Request<T>(
         });
 }
 
-export function restGet<T>(path: string, params: any): Promise<T> {
+function RestGet<T>(path: string, params: any): Promise<T> {
     return Request("get", path, params);
 }
 
-export function restPost<T>(path: string, params: any): Promise<T> {
+function RestPost<T>(path: string, params: any): Promise<T> {
     return Request("post", path, params);
 }
 
-export function restDel<T>(path: string, params: any): Promise<T> {
+function RestDel<T>(path: string, params: any): Promise<T> {
     return Request("delete", path, params);
 }
 
-export function restPut<T>(path: string, params: any): Promise<T> {
+function RestPut<T>(path: string, params: any): Promise<T> {
     return Request("put", path, params);
 }
 
 export default {
-    Get: restGet,
-    Post: restPost,
-    Put: restDel,
-    Delete: restPut
+    RestGet,
+    RestPost,
+    RestDel,
+    RestPut
 };

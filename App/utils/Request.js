@@ -1,21 +1,17 @@
 import axios from "axios";
-import https from "https";
 import qs from "qs";
 import GlobalStore from "../store/GlobalStore";
-export function Request(httpMethod, path, params, contentType = "text/plain") {
+function Request(httpMethod, path, params, contentType = "text/plain") {
     path = path.startsWith("/") ? path.substring(1) : path;
     const headers = {
         Accept: "*/*",
-        Authorization: "Bearer" + GlobalStore.getInstance().getToken(),
+        Authorization: "Bearer " + GlobalStore.getInstance().getToken(),
         "Content-type": contentType
     };
     const ax = axios.create({
         baseURL: "https://api.github.com/",
         timeout: 60000,
         withCredentials: true,
-        httpsAgent: new https.Agent({
-            rejectUnauthorized: false
-        }),
         headers
     });
     return ax
@@ -49,21 +45,21 @@ export function Request(httpMethod, path, params, contentType = "text/plain") {
         throw error;
     });
 }
-export function restGet(path, params) {
+function RestGet(path, params) {
     return Request("get", path, params);
 }
-export function restPost(path, params) {
+function RestPost(path, params) {
     return Request("post", path, params);
 }
-export function restDel(path, params) {
+function RestDel(path, params) {
     return Request("delete", path, params);
 }
-export function restPut(path, params) {
+function RestPut(path, params) {
     return Request("put", path, params);
 }
 export default {
-    Get: restGet,
-    Post: restPost,
-    Put: restDel,
-    Delete: restPut
+    RestGet,
+    RestPost,
+    RestDel,
+    RestPut
 };

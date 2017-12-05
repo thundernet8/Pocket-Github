@@ -16,7 +16,12 @@ export default function startup() {
     return __awaiter(this, void 0, void 0, function* () {
         RegisterScreens();
         Storage.init();
-        GlobalStore.getInstance().checkLogin();
+        const globalStore = GlobalStore.getInstance();
+        globalStore.checkLogin().then(result => {
+            if (result) {
+                globalStore.signIn();
+            }
+        });
         const icons = yield Promise.all([
             Icon.getImageSource("logo-rss", 30),
             Icon.getImageSource("md-information-circle", 30),

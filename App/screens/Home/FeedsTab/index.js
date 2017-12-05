@@ -8,12 +8,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import * as React from "react";
-import { View, Text, Image } from "react-native";
 import { observer } from "mobx-react";
-import GlobalStore from "../../../store/GlobalStore";
+import { FlatList, View, Text } from "react-native";
+import FeedsStore from "../../../store/FeedsStore";
 let FeedsTabScreen = class FeedsTabScreen extends React.Component {
     constructor(props) {
         super(props);
+        this.renderEventItem = ({ item }) => {
+            return (React.createElement(View, null,
+                React.createElement(Text, null,
+                    item.id,
+                    ">")));
+        };
+        this.store = FeedsStore.getInstance();
     }
     componentDidMount() {
         console.log("componentDidMount");
@@ -22,13 +29,8 @@ let FeedsTabScreen = class FeedsTabScreen extends React.Component {
         console.log("componentWillUnmount");
     }
     render() {
-        const globalStore = GlobalStore.getInstance();
-        const { me } = globalStore;
-        return (React.createElement(View, null,
-            React.createElement(Text, null,
-                "FeedsTabScreen - ",
-                me && me.bio),
-            me && (React.createElement(Image, { source: { uri: me.avatarUrl }, style: { width: 400, height: 400 } }))));
+        const { events } = this.store;
+        return React.createElement(FlatList, { data: events, renderItem: this.renderEventItem });
     }
 };
 FeedsTabScreen.navigatorButtons = {};

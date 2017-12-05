@@ -160,7 +160,9 @@ export default class GlobalStore {
             })
             .then((data: ApolloQueryResult<meQuery>) => {
                 console.log(data);
-                this.me = data.data.viewer;
+                const viewer = data.data.viewer;
+                this.me = viewer;
+                return viewer;
             })
             .catch(error => {
                 console.warn(error);
@@ -177,6 +179,13 @@ export default class GlobalStore {
     };
 
     @observable me: meQuery["viewer"];
+
+    public mePromise(): Promise<meQuery["viewer"]> {
+        if (this.me) {
+            return Promise.resolve(this.me);
+        }
+        return this.signIn();
+    }
 
     /**
      * Modal show login screen

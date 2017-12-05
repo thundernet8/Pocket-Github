@@ -1,13 +1,13 @@
 import EventType from "../enum/EventType";
 import Issue from "../interface/Issue";
 
-interface Repo {
+interface IRepo {
     id: number;
     name: string;
     url: string;
 }
 
-interface Actor {
+interface IActor {
     id: number;
     login: string;
     display_login: string;
@@ -16,7 +16,7 @@ interface Actor {
     avatar_url: string;
 }
 
-interface Org {
+interface IOrg {
     id: number;
     login: string;
     gravatar_id: string;
@@ -24,7 +24,7 @@ interface Org {
     avatar_url: string;
 }
 
-interface Payload {
+interface IPayload {
     action?: "started" | "created"; // TODO more
     issue?: Issue;
     ref?: string;
@@ -34,12 +34,13 @@ interface Payload {
     pusher_type?: "user" | ""; // TODO more
 }
 
-export default interface Event {
+export default interface IEvent {
+    id: string;
     type: EventType;
-    payload: Payload;
-    repo: Repo;
-    actor: Actor;
+    payload: IPayload;
+    repo: IRepo;
+    actor: IActor;
     // "public": true,
     created_at: string;
-    org: Org;
-}
+    org: IOrg;
+};

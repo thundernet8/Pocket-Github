@@ -1,23 +1,28 @@
 import * as React from "react";
-import { View, Text, Image } from "react-native";
 import { observer } from "mobx-react";
+import { FlatList, View, Text } from "react-native";
+import { Container, Content, Header, List, ListItem } from "native-base";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
-import GlobalStore from "../../../store/GlobalStore";
-// import FeedsStore from "../../../store/FeedsStore";
+// import GlobalStore from "../../../store/GlobalStore";
+import FeedsStore from "../../../store/FeedsStore";
+import IEvent from "../../../data/interface/IEvent";
 
 interface FeedsTabScreenProps extends IBaseScreenProps {}
 
 interface FeedsTabScreenState {}
 
 @observer
-export default class FeedsTabScreen extends React.Component<
+export default class FeedsTabScreen extends React.PureComponent<
     FeedsTabScreenProps,
     FeedsTabScreenState
 > {
     static navigatorButtons = {};
 
+    private store: FeedsStore;
+
     constructor(props) {
         super(props);
+        this.store = FeedsStore.getInstance();
     }
 
     componentDidMount() {
@@ -28,20 +33,29 @@ export default class FeedsTabScreen extends React.Component<
         console.log("componentWillUnmount");
     }
 
+    renderEventItem = ({ item }: { item: IEvent }) => {
+        return (
+            <View key={item.id}>
+                <Text>{item.id}></Text>
+            </View>
+        );
+    };
+
     render() {
-        const globalStore = GlobalStore.getInstance();
-        const { me } = globalStore;
+        const { events } = this.store;
 
         return (
-            <View>
-                <Text>FeedsTabScreen - {me && me.bio}</Text>
-                {me && (
-                    <Image
-                        source={{ uri: me.avatarUrl }}
-                        style={{ width: 400, height: 400 }}
-                    />
-                )}
-            </View>
+            <Container>
+                <Header />
+                <Content>
+                    <List>
+                        <FlatList
+                            data={events}
+                            renderItem={this.renderEventItem}
+                        />
+                    </List>
+                </Content>
+            </Container>
         );
     }
 }
