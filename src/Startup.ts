@@ -12,6 +12,10 @@ export default async function startup() {
     // 初始化本地存储
     Storage.init();
 
+    // 忽略一些warning
+    // console.ignoredYellowBox = ["Remote debugger"];
+    console.disableYellowBox = true;
+
     // 实例化Base Store
     const globalStore = GlobalStore.getInstance();
     globalStore.checkLogin().then(result => {
@@ -53,5 +57,8 @@ export default async function startup() {
                 title: "Pull Requests"
             }
         ]
+        // appStyle: {
+        //     tabBarHidden: true
+        // }
     });
 }

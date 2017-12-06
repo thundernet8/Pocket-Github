@@ -9,17 +9,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import * as React from "react";
 import { observer } from "mobx-react";
-import { FlatList, View, Text } from "react-native";
-import { Container, Content, Header, List } from "native-base";
+import { FlatList, View, ActivityIndicator, StyleSheet } from "react-native";
 import FeedsStore from "../../../store/FeedsStore";
-let FeedsTabScreen = class FeedsTabScreen extends React.PureComponent {
+import FeedItemView from "../../../views/FeedItem";
+let FeedsTabScreen = class FeedsTabScreen extends React.Component {
     constructor(props) {
         super(props);
         this.renderEventItem = ({ item }) => {
-            return (React.createElement(View, { key: item.id },
-                React.createElement(Text, null,
-                    item.id,
-                    ">")));
+            return React.createElement(FeedItemView, { event: item });
+        };
+        this.renderListHeader = () => {
+            const { refreshing } = this.store;
+            if (!refreshing) {
+                return null;
+            }
+            return (React.createElement(View, { style: { flex: 1 } },
+                React.createElement(ActivityIndicator, { size: "small" })));
+        };
+        this.renderListFooter = () => {
+            const { loadingMore } = this.store;
+            if (!loadingMore) {
+                return null;
+            }
+            return (React.createElement(View, { style: styles.listFooter },
+                React.createElement(ActivityIndicator, { animating: true, size: "small" })));
         };
         this.store = FeedsStore.getInstance();
     }
@@ -30,12 +43,14 @@ let FeedsTabScreen = class FeedsTabScreen extends React.PureComponent {
         console.log("componentWillUnmount");
     }
     render() {
-        const { events } = this.store;
-        return (React.createElement(Container, null,
-            React.createElement(Header, null),
-            React.createElement(Content, null,
-                React.createElement(List, null,
-                    React.createElement(FlatList, { data: events, renderItem: this.renderEventItem })))));
+        const { store } = this;
+        const { events, refreshing, loading } = store;
+        return (React.createElement(View, { style: styles.container },
+            events.length === 0 &&
+                loading && (React.createElement(View, { style: styles.loadingIndicator },
+                React.createElement(ActivityIndicator, { size: "large" }))),
+            events.length > 0 && (React.createElement(FlatList, { keyExtractor: item => item.id, style: styles.flatList, data: events, refreshing: refreshing, onRefresh: store.refresh, onEndReached: store.loadNextPage, onEndReachedThreshold: 0, renderItem: this.renderEventItem, initialNumToRender: 30 })),
+            this.renderListFooter()));
     }
 };
 FeedsTabScreen.navigatorButtons = {};
@@ -44,3 +59,20 @@ FeedsTabScreen = __decorate([
     __metadata("design:paramtypes", [Object])
 ], FeedsTabScreen);
 export default FeedsTabScreen;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#fafafa",
+        marginBottom: 0
+    },
+    loadingIndicator: {
+        paddingVertical: 20
+    },
+    flatList: {},
+    listFooter: {
+        paddingVertical: 20
+    },
+    listItem: {
+        paddingVertical: 10
+    }
+});

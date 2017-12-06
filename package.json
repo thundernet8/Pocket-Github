@@ -6,13 +6,14 @@
     "author": "wuxueqian <wuxueqian2010@hotmail.com>",
     "license": "MIT",
     "private": true,
-    "keywords": ["Github App", "React-Native"],
+    "keywords": [
+        "Github App",
+        "React-Native"
+    ],
     "scripts": {
         "watch": "tsc -p ./ -w",
-        "build":
-            "rimraf App && tsc && cp ./src/data/graphQL/*.graphql ./App/data/graphQL/",
-        "gql":
-            "cd src/data/graphQL && apollo-codegen generate *.graphql --schema schema.json --target typescript --output types.ts",
+        "build": "rimraf App && tsc && cp ./src/data/graphQL/*.graphql ./App/data/graphQL/",
+        "gql": "cd src/data/graphQL && apollo-codegen generate *.graphql --schema schema.json --target typescript --output types.ts",
         "start": "node node_modules/react-native/local-cli/cli.js start",
         "android": "react-native run-android",
         "ios": "react-native run-ios",
@@ -22,7 +23,9 @@
         "test": "jest"
     },
     "lint-staged": {
-        "src/**/*.{ts,tsx}": ["lint-staged:ts"]
+        "src/**/*.{ts,tsx}": [
+            "lint-staged:ts"
+        ]
     },
     "pre-commit": "lint-staged",
     "dependencies": {
@@ -35,10 +38,11 @@
         "graphql-tag": "^2.5.0",
         "mobx": "^3.3.2",
         "mobx-react": "^4.3.5",
+        "moment": "^2.19.3",
         "native-base": "^2.3.3",
         "react": "^16.2.0",
         "react-apollo": "^2.0.1",
-        "react-native": "^0.50.4",
+        "react-native": "^0.51.0",
         "react-native-elements": "^0.18.4",
         "react-native-keychain": "^1.2.1",
         "react-native-navigation": "^1.1.298",

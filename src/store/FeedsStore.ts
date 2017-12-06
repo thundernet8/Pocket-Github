@@ -1,4 +1,4 @@
-import { observable } from "mobx";
+import { observable, action, toJS } from "mobx";
 import AbstractScreenStore from "./AbstractScreenStore";
 import GlobalStore from "./GlobalStore";
 import Request from "../utils/Request";
@@ -20,6 +20,12 @@ export default class FeedsStore extends AbstractScreenStore {
 
     // @override
     protected loadData() {
+        const { page, events, loading } = this;
+
+        if (loading) {
+            return;
+        }
+
         this.loading = true;
         const globalStore = GlobalStore.getInstance();
         globalStore
@@ -27,11 +33,15 @@ export default class FeedsStore extends AbstractScreenStore {
             .then(me => {
                 return Request.RestGet<IEvent[]>(
                     `/users/${me.login}/received_events`,
-                    { page: this.page }
+                    { page }
                 );
             })
             .then(resp => {
-                this.events = resp;
+                if (page === 1) {
+                    this.events = resp;
+                } else {
+                    this.events = [].concat(toJS(events)).concat(resp);
+                }
                 this.dataLoaded = true;
                 if (!resp || resp.length === 0) {
                     this.hasMoreEvents = false;
@@ -42,10 +52,14 @@ export default class FeedsStore extends AbstractScreenStore {
             })
             .finally(() => {
                 this.loading = false;
+                this.refreshing = false;
+                this.loadingMore = false;
             });
     }
 
     @observable loading: boolean = false;
+    @observable refreshing: boolean = false;
+    @observable loadingMore: boolean = false;
 
     /**
      * 收到的事件
@@ -54,7 +68,25 @@ export default class FeedsStore extends AbstractScreenStore {
 
     @observable page: number = 1;
 
-    @observable pageSize: number = 2;
+    @observable pageSize: number = 30;
 
     @observable hasMoreEvents: boolean = true;
+
+    @action
+    loadNextPage = () => {
+        const { page, pageSize, hasMoreEvents, events, loading } = this;
+        if (loading || !hasMoreEvents || events.length < pageSize) {
+            return;
+        }
+        this.page = page + 1;
+        this.loadingMore = true;
+        this.loadData();
+    };
+
+    @action
+    refresh = () => {
+        this.page = 1;
+        this.refreshing = true;
+        this.loadData();
+    };
 }

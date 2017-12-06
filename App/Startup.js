@@ -16,6 +16,7 @@ export default function startup() {
     return __awaiter(this, void 0, void 0, function* () {
         RegisterScreens();
         Storage.init();
+        console.disableYellowBox = true;
         const globalStore = GlobalStore.getInstance();
         globalStore.checkLogin().then(result => {
             if (result) {
