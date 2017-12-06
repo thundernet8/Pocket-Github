@@ -10,9 +10,10 @@ export default class WatchEvent extends React.PureComponent {
             switch (event.payload.action) {
                 case EventAction.STARTED:
                     return (React.createElement(View, { style: styles.headTitle },
-                        React.createElement(Text, { style: { fontWeight: "bold" } }, event.actor.display_login),
-                        React.createElement(Text, null, " starred "),
-                        React.createElement(Text, { style: { fontWeight: "bold" } }, event.repo.name)));
+                        React.createElement(Text, { style: { fontWeight: "600", flexWrap: "wrap" } },
+                            React.createElement(Text, null, event.actor.display_login),
+                            React.createElement(Text, { style: { fontWeight: "200" } }, " starred "),
+                            event.repo.name)));
                 default:
                     return React.createElement(Text, null, event.payload.action);
             }

@@ -1,6 +1,12 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import { FlatList, View, ActivityIndicator, StyleSheet } from "react-native";
+import {
+    FlatList,
+    View,
+    ActivityIndicator,
+    StyleSheet,
+    Dimensions
+} from "react-native";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
 // import GlobalStore from "../../../store/GlobalStore";
 import FeedsStore from "../../../store/FeedsStore";
@@ -81,13 +87,12 @@ export default class FeedsTabScreen extends React.Component<
                         refreshing={refreshing}
                         onRefresh={store.refresh}
                         onEndReached={store.loadNextPage}
-                        onEndReachedThreshold={0}
+                        onEndReachedThreshold={0.1}
                         renderItem={this.renderEventItem}
                         initialNumToRender={30}
-                        // ListFooterComponent={this.renderListFooter}
+                        ListFooterComponent={this.renderListFooter}
                     />
                 )}
-                {this.renderListFooter()}
             </View>
         );
     }
@@ -97,8 +102,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fafafa",
-        marginBottom: 0,
-        padding: 0
+        margin: 0,
+        padding: 0,
+        borderWidth: 2,
+        borderColor: "red"
+        // height: 600
         // alignItems: "stretch",
         // paddingBottom: 100
     },
@@ -107,6 +115,7 @@ const styles = StyleSheet.create({
     },
     flatList: {
         // height: 5000
+        flex: 1
         // backgroundColor: "blue"
     },
     listFooter: {

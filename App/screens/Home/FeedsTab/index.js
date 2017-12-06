@@ -49,8 +49,7 @@ let FeedsTabScreen = class FeedsTabScreen extends React.Component {
             events.length === 0 &&
                 loading && (React.createElement(View, { style: styles.loadingIndicator },
                 React.createElement(ActivityIndicator, { size: "large" }))),
-            events.length > 0 && (React.createElement(FlatList, { keyExtractor: item => item.id, style: styles.flatList, data: events, refreshing: refreshing, onRefresh: store.refresh, onEndReached: store.loadNextPage, onEndReachedThreshold: 0, renderItem: this.renderEventItem, initialNumToRender: 30 })),
-            this.renderListFooter()));
+            events.length > 0 && (React.createElement(FlatList, { keyExtractor: item => item.id, style: styles.flatList, data: events, refreshing: refreshing, onRefresh: store.refresh, onEndReached: store.loadNextPage, onEndReachedThreshold: 0.1, renderItem: this.renderEventItem, initialNumToRender: 30, ListFooterComponent: this.renderListFooter }))));
     }
 };
 FeedsTabScreen.navigatorButtons = {};
@@ -63,13 +62,17 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fafafa",
-        marginBottom: 0,
-        padding: 0
+        margin: 0,
+        padding: 0,
+        borderWidth: 2,
+        borderColor: "red"
     },
     loadingIndicator: {
         paddingVertical: 20
     },
-    flatList: {},
+    flatList: {
+        flex: 1
+    },
     listFooter: {
         paddingVertical: 20
     },

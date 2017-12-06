@@ -25,11 +25,9 @@ export default class WatchEvent extends React.PureComponent<
             case EventAction.STARTED:
                 return (
                     <View style={styles.headTitle}>
-                        <Text style={{ fontWeight: "bold" }}>
-                            {event.actor.display_login}
-                        </Text>
-                        <Text> starred </Text>
-                        <Text style={{ fontWeight: "bold" }}>
+                        <Text style={{ fontWeight: "600", flexWrap: "wrap" }}>
+                            <Text>{event.actor.display_login}</Text>
+                            <Text style={{ fontWeight: "200" }}> starred </Text>
                             {event.repo.name}
                         </Text>
                     </View>

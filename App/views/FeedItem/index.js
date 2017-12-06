@@ -6,7 +6,7 @@ import WatchEvent from "./watchEvent";
 import CreateEvent from "./createEvent";
 import PushEvent from "./pushEvent";
 import PullRequestEvent from "./pullRequest";
-export default class FeedItem extends React.PureComponent {
+export default class FeedItem extends React.Component {
     constructor(props) {
         super(props);
         this.renderEvent = (event) => {
@@ -24,8 +24,13 @@ export default class FeedItem extends React.PureComponent {
             }
         };
     }
+    shouldComponentUpdate(nextProps, nextState) {
+        const { event } = this.props;
+        return event.id !== nextProps.event.id;
+    }
     render() {
         const { event } = this.props;
+        console.log("render feed item");
         return (React.createElement(View, { style: styles.listItem },
             event.actor &&
                 event.actor.avatar_url && (React.createElement(Avatar, { source: { uri: event.actor.avatar_url }, rounded: true, medium: true, width: 36, height: 36 })),

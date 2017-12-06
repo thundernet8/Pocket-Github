@@ -21,16 +21,20 @@ export default class PushEvent extends React.PureComponent<
 
     renderTitle = (event: IEvent) => {
         return (
-            <View style={styles.headTitle}>
-                <Text style={{ fontWeight: "bold" }}>
-                    {event.actor.display_login}
+            <View>
+                <Text style={styles.headTitle}>
+                    <Text style={{ fontWeight: "bold" }}>
+                        {event.actor.display_login}
+                    </Text>
+                    <Text> pushed to </Text>
+                    <Text style={{ fontWeight: "bold" }}>
+                        {event.payload.ref.replace("refs/heads/", "")}
+                    </Text>
+                    <Text> in </Text>
+                    <Text style={{ fontWeight: "bold" }}>
+                        {event.repo.name}
+                    </Text>
                 </Text>
-                <Text> pushed to </Text>
-                <Text style={{ fontWeight: "bold" }}>
-                    {event.payload.ref.replace("refs/heads/", "")}
-                </Text>
-                <Text> in </Text>
-                <Text style={{ fontWeight: "bold" }}>{event.repo.name}</Text>
                 {event.payload.commits.map(commit => {
                     return (
                         <Text key={commit.sha}>{`${commit.sha.substr(0, 7)} ${

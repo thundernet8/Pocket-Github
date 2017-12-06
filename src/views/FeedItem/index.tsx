@@ -14,12 +14,17 @@ interface FeedItemProps {
 
 interface FeedItemState {}
 
-export default class FeedItem extends React.PureComponent<
+export default class FeedItem extends React.Component<
     FeedItemProps,
     FeedItemState
 > {
     constructor(props) {
         super(props);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        const { event } = this.props;
+        return event.id !== nextProps.event.id;
     }
 
     renderEvent = (event: IEvent) => {
@@ -39,7 +44,7 @@ export default class FeedItem extends React.PureComponent<
 
     render() {
         const { event } = this.props;
-
+        console.log("render feed item");
         return (
             <View style={styles.listItem}>
                 {event.actor &&
