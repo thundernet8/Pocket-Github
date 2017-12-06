@@ -97,7 +97,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#fafafa",
-        marginBottom: 0
+        marginBottom: 0,
+        padding: 0
         // alignItems: "stretch",
         // paddingBottom: 100
     },
