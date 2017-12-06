@@ -1,13 +1,17 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import moment from "moment";
 import { getTimeDiff } from "../../utils/DateTime";
 export default class PushEvent extends React.PureComponent {
     constructor(props) {
         super(props);
         this.renderTitle = (event) => {
-            return (React.createElement(View, null,
-                React.createElement(Text, null, `${event.actor.display_login} pushed to ${event.payload.ref.replace("refs/heads/", "")} in ${event.repo.name}`),
+            return (React.createElement(View, { style: styles.headTitle },
+                React.createElement(Text, { style: { fontWeight: "bold" } }, event.actor.display_login),
+                React.createElement(Text, null, " pushed to "),
+                React.createElement(Text, { style: { fontWeight: "bold" } }, event.payload.ref.replace("refs/heads/", "")),
+                React.createElement(Text, null, " in "),
+                React.createElement(Text, { style: { fontWeight: "bold" } }, event.repo.name),
                 event.payload.commits.map(commit => {
                     return (React.createElement(Text, { key: commit.sha }, `${commit.sha.substr(0, 7)} ${commit.message}`));
                 })));
@@ -23,3 +27,8 @@ export default class PushEvent extends React.PureComponent {
             this.renderMeta(event)));
     }
 }
+const styles = StyleSheet.create({
+    headTitle: {
+        flexDirection: "row"
+    }
+});

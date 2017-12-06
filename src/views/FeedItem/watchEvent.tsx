@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import moment from "moment";
 import EventAction from "../../data/enum/EventAction";
 import IEvent from "../../data/interface/IEvent";
@@ -24,9 +24,15 @@ export default class WatchEvent extends React.PureComponent<
         switch (event.payload.action) {
             case EventAction.STARTED:
                 return (
-                    <Text>{`${event.actor.display_login} starred ${
-                        event.repo.name
-                    }`}</Text>
+                    <View style={styles.headTitle}>
+                        <Text style={{ fontWeight: "bold" }}>
+                            {event.actor.display_login}
+                        </Text>
+                        <Text> starred </Text>
+                        <Text style={{ fontWeight: "bold" }}>
+                            {event.repo.name}
+                        </Text>
+                    </View>
                 );
             default:
                 return <Text>{event.payload.action}</Text>;
@@ -48,3 +54,9 @@ export default class WatchEvent extends React.PureComponent<
         );
     }
 }
+
+const styles = StyleSheet.create({
+    headTitle: {
+        flexDirection: "row"
+    }
+});

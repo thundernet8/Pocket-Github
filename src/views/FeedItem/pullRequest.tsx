@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import moment from "moment";
 import IEvent from "../../data/interface/IEvent";
 import EventAction from "../../data/enum/EventAction";
@@ -31,10 +31,14 @@ export default class PullRequestEvent extends React.PureComponent<
         }
 
         return (
-            <View>
-                <Text>{`${event.actor.display_login} ${action} pull request ${
-                    event.repo.name
-                }#${event.payload.number}`}</Text>
+            <View style={styles.headTitle}>
+                <Text style={{ fontWeight: "bold" }}>
+                    {event.actor.display_login}
+                </Text>
+                <Text>{` ${action} pull request `}</Text>
+                <Text style={{ fontWeight: "bold" }}>{`${event.repo.name}#${
+                    event.payload.number
+                }`}</Text>
             </View>
         );
     };
@@ -54,3 +58,9 @@ export default class PullRequestEvent extends React.PureComponent<
         );
     }
 }
+
+const styles = StyleSheet.create({
+    headTitle: {
+        flexDirection: "row"
+    }
+});

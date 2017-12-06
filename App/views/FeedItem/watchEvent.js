@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import moment from "moment";
 import EventAction from "../../data/enum/EventAction";
 import { getTimeDiff } from "../../utils/DateTime";
@@ -9,7 +9,10 @@ export default class WatchEvent extends React.PureComponent {
         this.renderTitle = (event) => {
             switch (event.payload.action) {
                 case EventAction.STARTED:
-                    return (React.createElement(Text, null, `${event.actor.display_login} starred ${event.repo.name}`));
+                    return (React.createElement(View, { style: styles.headTitle },
+                        React.createElement(Text, { style: { fontWeight: "bold" } }, event.actor.display_login),
+                        React.createElement(Text, null, " starred "),
+                        React.createElement(Text, { style: { fontWeight: "bold" } }, event.repo.name)));
                 default:
                     return React.createElement(Text, null, event.payload.action);
             }
@@ -25,3 +28,8 @@ export default class WatchEvent extends React.PureComponent {
             this.renderMeta(event)));
     }
 }
+const styles = StyleSheet.create({
+    headTitle: {
+        flexDirection: "row"
+    }
+});

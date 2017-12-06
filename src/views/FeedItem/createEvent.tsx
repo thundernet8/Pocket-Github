@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import moment from "moment";
 import IEvent from "../../data/interface/IEvent";
 import { getTimeDiff } from "../../utils/DateTime";
@@ -21,9 +21,13 @@ export default class CreateEvent extends React.PureComponent<
 
     renderTitle = (event: IEvent) => {
         return (
-            <Text>{`${event.actor.display_login} created a repository ${
-                event.repo.name
-            }`}</Text>
+            <View style={styles.headTitle}>
+                <Text style={{ fontWeight: "bold" }}>
+                    {event.actor.display_login}
+                </Text>
+                <Text> created a repository </Text>
+                <Text style={{ fontWeight: "bold" }}>{event.repo.name}</Text>
+            </View>
         );
     };
 
@@ -42,3 +46,9 @@ export default class CreateEvent extends React.PureComponent<
         );
     }
 }
+
+const styles = StyleSheet.create({
+    headTitle: {
+        flexDirection: "row"
+    }
+});

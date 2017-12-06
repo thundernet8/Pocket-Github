@@ -1,5 +1,5 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import moment from "moment";
 import EventAction from "../../data/enum/EventAction";
 import { getTimeDiff } from "../../utils/DateTime";
@@ -15,8 +15,10 @@ export default class PullRequestEvent extends React.PureComponent {
                 default:
                     action = event.payload.action;
             }
-            return (React.createElement(View, null,
-                React.createElement(Text, null, `${event.actor.display_login} ${action} pull request ${event.repo.name}#${event.payload.number}`)));
+            return (React.createElement(View, { style: styles.headTitle },
+                React.createElement(Text, { style: { fontWeight: "bold" } }, event.actor.display_login),
+                React.createElement(Text, null, ` ${action} pull request `),
+                React.createElement(Text, { style: { fontWeight: "bold" } }, `${event.repo.name}#${event.payload.number}`)));
         };
         this.renderMeta = (event) => {
             return React.createElement(Text, null, getTimeDiff(moment(event.created_at)));
@@ -29,3 +31,8 @@ export default class PullRequestEvent extends React.PureComponent {
             this.renderMeta(event)));
     }
 }
+const styles = StyleSheet.create({
+    headTitle: {
+        flexDirection: "row"
+    }
+});
