@@ -6,5 +6,6 @@ var Screen;
     Screen["HOMEIssuesTab"] = "screen.Home.Issues";
     Screen["HOMEPRsTab"] = "screen.Home.PullRequests";
     Screen["InAppNotification"] = "screen.InAppNotification";
+    Screen["LeftMenu"] = "screen.LeftMenu";
 })(Screen || (Screen = {}));
 export default Screen;

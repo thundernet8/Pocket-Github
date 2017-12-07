@@ -34,21 +34,49 @@ export default function startup() {
                     label: "Feeds",
                     screen: Screen.HOMEFeedsTab,
                     icon: icons[0],
-                    title: "Feeds"
+                    title: "Feeds",
+                    navigatorButtons: {
+                        leftButtons: [
+                            {
+                                id: "sideMenu"
+                            }
+                        ]
+                    }
                 },
                 {
                     label: "Issues",
                     screen: Screen.HOMEIssuesTab,
                     icon: icons[1],
-                    title: "Issues"
+                    title: "Issues",
+                    navigatorButtons: {
+                        leftButtons: [
+                            {
+                                id: "sideMenu"
+                            }
+                        ]
+                    }
                 },
                 {
                     label: "Pull Requests",
                     screen: Screen.HOMEPRsTab,
                     icon: icons[2],
-                    title: "Pull Requests"
+                    title: "Pull Requests",
+                    navigatorButtons: {
+                        leftButtons: [
+                            {
+                                id: "sideMenu"
+                            }
+                        ]
+                    }
                 }
-            ]
+            ],
+            drawer: {
+                left: {
+                    screen: Screen.LeftMenu,
+                    passProps: {}
+                },
+                disableOpenGesture: true
+            }
         });
     });
 }

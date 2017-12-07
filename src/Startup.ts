@@ -40,23 +40,51 @@ export default async function startup() {
                 screen: Screen.HOMEFeedsTab,
                 icon: icons[0], // require("./assets/images/home_tab_feeds.png"),
                 // selectedIcon: require("./assets/images/home_tab_feeds_selected.png"), // iOS only
-                title: "Feeds"
+                title: "Feeds",
+                navigatorButtons: {
+                    leftButtons: [
+                        {
+                            id: "sideMenu"
+                        }
+                    ]
+                }
             },
             {
                 label: "Issues",
                 screen: Screen.HOMEIssuesTab,
                 icon: icons[1], // require("./assets/images/home_tab_issues.png"),
                 // selectedIcon: require("./assets/images/home_tab_issues_selected.png"), // iOS only
-                title: "Issues"
+                title: "Issues",
+                navigatorButtons: {
+                    leftButtons: [
+                        {
+                            id: "sideMenu"
+                        }
+                    ]
+                }
             },
             {
                 label: "Pull Requests",
                 screen: Screen.HOMEPRsTab,
                 icon: icons[2], // require("./assets/images/home_tab_prs.png"),
                 // selectedIcon: require("./assets/images/home_tab_prs_selected.png"), // iOS only
-                title: "Pull Requests"
+                title: "Pull Requests",
+                navigatorButtons: {
+                    leftButtons: [
+                        {
+                            id: "sideMenu"
+                        }
+                    ]
+                }
             }
-        ]
+        ],
+        drawer: {
+            left: {
+                screen: Screen.LeftMenu,
+                passProps: {}
+            },
+            disableOpenGesture: true
+        }
         // appStyle: {
         //     tabBarHidden: true
         // }

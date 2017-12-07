@@ -6,6 +6,7 @@ import WatchEvent from "./watchEvent";
 import CreateEvent from "./createEvent";
 import PushEvent from "./pushEvent";
 import PullRequestEvent from "./pullRequest";
+import ForkEvent from "./forkEvent";
 export default class FeedItem extends React.Component {
     constructor(props) {
         super(props);
@@ -19,6 +20,8 @@ export default class FeedItem extends React.Component {
                     return React.createElement(PushEvent, { event: event, style: styles.text });
                 case EventType.PullRequest:
                     return React.createElement(PullRequestEvent, { event: event, style: styles.text });
+                case EventType.Fork:
+                    return React.createElement(ForkEvent, { event: event, style: styles.text });
                 default:
                     return null;
             }

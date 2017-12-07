@@ -45,18 +45,18 @@ export interface INavigator {
     handleDeepLink: (params: { link: string }) => void;
     setButtons: (
         params: {
-            leftButtons: any[];
-            rightButtons: any[];
-            animated: boolean;
+            leftButtons?: any[];
+            rightButtons?: any[];
+            animated?: boolean;
         }
     ) => void;
     setTitle: (params: { title: string }) => void;
     setSubTitle: (params: { subtitle: string }) => void;
     toggleDrawer: (
-        params: {
+        params?: {
             side: "left" | "right";
-            animated: boolean;
-            to: "open" | "closed" | "missing";
+            animated?: boolean;
+            to?: "open" | "closed" | "missing";
         }
     ) => void;
     setDrawerEnabled: (

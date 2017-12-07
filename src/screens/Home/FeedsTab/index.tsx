@@ -1,12 +1,6 @@
 import * as React from "react";
 import { observer } from "mobx-react";
-import {
-    FlatList,
-    View,
-    ActivityIndicator,
-    StyleSheet,
-    Dimensions
-} from "react-native";
+import { FlatList, View, ActivityIndicator, StyleSheet } from "react-native";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
 // import GlobalStore from "../../../store/GlobalStore";
 import FeedsStore from "../../../store/FeedsStore";
@@ -22,14 +16,26 @@ export default class FeedsTabScreen extends React.Component<
     FeedsTabScreenProps,
     FeedsTabScreenState
 > {
-    static navigatorButtons = {};
-
     private store: FeedsStore;
 
     constructor(props) {
         super(props);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
         this.store = FeedsStore.getInstance();
     }
+
+    onNavigatorEvent = event => {
+        console.log(event);
+        if (event.type === "NavBarButtonPress") {
+            if (event.id === "sideMenu") {
+                this.props.navigator.toggleDrawer({
+                    side: "left" // the side of the drawer since you can have two, 'left' / 'right'
+                    // animated: true,
+                    // to: "open" // https://github.com/wix/react-native-navigation/issues/1727
+                });
+            }
+        }
+    };
 
     componentDidMount() {
         console.log("componentDidMount");

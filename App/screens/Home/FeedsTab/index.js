@@ -15,6 +15,16 @@ import FeedItemView from "../../../views/FeedItem";
 let FeedsTabScreen = class FeedsTabScreen extends React.Component {
     constructor(props) {
         super(props);
+        this.onNavigatorEvent = event => {
+            console.log(event);
+            if (event.type === "NavBarButtonPress") {
+                if (event.id === "sideMenu") {
+                    this.props.navigator.toggleDrawer({
+                        side: "left"
+                    });
+                }
+            }
+        };
         this.renderEventItem = ({ item }) => {
             return React.createElement(FeedItemView, { event: item });
         };
@@ -34,6 +44,7 @@ let FeedsTabScreen = class FeedsTabScreen extends React.Component {
             return (React.createElement(View, { style: styles.listFooter },
                 React.createElement(ActivityIndicator, { animating: true, size: "small" })));
         };
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
         this.store = FeedsStore.getInstance();
     }
     componentDidMount() {
@@ -52,7 +63,6 @@ let FeedsTabScreen = class FeedsTabScreen extends React.Component {
             events.length > 0 && (React.createElement(FlatList, { keyExtractor: item => item.id, style: styles.flatList, data: events, refreshing: refreshing, onRefresh: store.refresh, onEndReached: store.loadNextPage, onEndReachedThreshold: 0.1, renderItem: this.renderEventItem, initialNumToRender: 30, ListFooterComponent: this.renderListFooter }))));
     }
 };
-FeedsTabScreen.navigatorButtons = {};
 FeedsTabScreen = __decorate([
     observer,
     __metadata("design:paramtypes", [Object])

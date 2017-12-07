@@ -4,6 +4,7 @@ import LoginScreen from "./Login";
 import FeedsTabScreen from "./Home/FeedsTab";
 import IssuesTabScreen from "./Home/IssuesTab";
 import PullRequestsTabScreen from "./Home/PRsTab";
+import LeftMenuScreen from "./LeftMenu";
 
 export default function registerScreens() {
     Navigation.registerComponent(Screen.LOGIN, () => LoginScreen);
@@ -13,4 +14,5 @@ export default function registerScreens() {
         Screen.HOMEPRsTab,
         () => PullRequestsTabScreen
     );
+    Navigation.registerComponent(Screen.LeftMenu, () => LeftMenuScreen);
 }
