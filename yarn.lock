@@ -4599,9 +4599,9 @@ react-native-keychain@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-keychain/-/react-native-keychain-1.2.1.tgz#6b2bed32ca0460d641974193715d18c808b0f12f"
 
-react-native-navigation@^1.1.298:
-  version "1.1.298"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.298.tgz#f483896fe41691945808fabb2efbce9fbe83dede"
+react-native-navigation@^1.1.300:
+  version "1.1.300"
+  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.300.tgz#0086f55a1bcd48010d43d12218de8e017f144937"
   dependencies:
     lodash "4.x.x"
 

@@ -53,3 +53,5 @@ buck-out/
 */fastlane/screenshots
 
 *.log
+
+App/

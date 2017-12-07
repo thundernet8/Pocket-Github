@@ -29,8 +29,8 @@ export default class FeedsTabScreen extends React.Component<
         if (event.type === "NavBarButtonPress") {
             if (event.id === "sideMenu") {
                 this.props.navigator.toggleDrawer({
-                    side: "left" // the side of the drawer since you can have two, 'left' / 'right'
-                    // animated: true,
+                    side: "left", // the side of the drawer since you can have two, 'left' / 'right'
+                    animated: true
                     // to: "open" // https://github.com/wix/react-native-navigation/issues/1727
                 });
             }
