@@ -16,6 +16,7 @@
         "start": "node node_modules/react-native/local-cli/cli.js start",
         "android": "react-native run-android",
         "ios": "react-native run-ios",
+        "release:android": "cd android && ./gradlew assembleRelease",
         "lint": "tslint -e node_modules typings -c .tslintrc.json src/**/*.ts",
         "lint-staged": "lint-staged",
         "lint-staged:ts": "tslint --fix -c .tslintrc.json",
