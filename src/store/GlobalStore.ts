@@ -6,15 +6,11 @@ import { setContext } from "apollo-link-context";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import gql from "graphql-tag";
 import * as Keychain from "react-native-keychain";
-import {
-    ScreenVisibilityListener as RNNScreenVisibilityListener,
-    Navigation
-} from "react-native-navigation";
 import ICredential from "../data/interface/ICredential";
 import Screen from "../data/enum/Screen";
 import { meQuery } from "../data/graphQL/types";
 import meQueryTag from "../data/graphQL/meQuery.graphql";
-import FeedsStore from "../store/FeedsStore";
+// import FeedsStore from "../store/FeedsStore";
 
 require("../utils/Promise");
 
@@ -190,15 +186,16 @@ export default class GlobalStore {
     /**
      * Modal show login screen
      */
-    private showLoginScreen = () => {
-        Navigation.showModal({
-            screen: Screen.LOGIN,
-            title: "Login",
-            passProps: {},
-            navigatorStyle: { navBarHidden: true },
-            animationType: "slide-up"
-        });
-    };
+    // private showLoginScreen = () => {
+    // TODO
+    // Navigation.showModal({
+    //     screen: Screen.LOGIN,
+    //     title: "Login",
+    //     passProps: {},
+    //     navigatorStyle: { navBarHidden: true },
+    //     animationType: "slide-up"
+    // });
+    // };
 
     /**
      * AppState listener
@@ -214,40 +211,40 @@ export default class GlobalStore {
      */
     @observable currentScreen: Screen = Screen.HOME;
 
-    private screenVisibilityListener: RNNScreenVisibilityListener;
+    // private screenVisibilityListener: RNNScreenVisibilityListener;
 
     private registerListener = () => {
-        this.screenVisibilityListener = new RNNScreenVisibilityListener({
-            didAppear: ({ screen, startTime, endTime, commandType }) => {
-                console.log(
-                    "screenVisibility",
-                    `Screen ${screen} displayed in ${endTime -
-                        startTime} millis after [${commandType}]`
-                );
-                if (commandType === "InitialScreen" && !this.isLogged) {
-                    this.showLoginScreen();
-                } else {
-                    switch (screen) {
-                        case Screen.HOMEFeedsTab:
-                            FeedsStore.getInstance().maybeInit();
-                            break;
-                        // TODO more
-                        default:
-                            console.log("default");
-                    }
-                }
-            }
-        });
+        // this.screenVisibilityListener = new RNNScreenVisibilityListener({
+        //     didAppear: ({ screen, startTime, endTime, commandType }) => {
+        //         console.log(
+        //             "screenVisibility",
+        //             `Screen ${screen} displayed in ${endTime -
+        //                 startTime} millis after [${commandType}]`
+        //         );
+        //         if (commandType === "InitialScreen" && !this.isLogged) {
+        //             this.showLoginScreen();
+        //         } else {
+        //             switch (screen) {
+        //                 case Screen.HOMEFeedsTab:
+        //                     FeedsStore.getInstance().maybeInit();
+        //                     break;
+        //                 // TODO more
+        //                 default:
+        //                     console.log("default");
+        //             }
+        //         }
+        //     }
+        // });
 
-        this.screenVisibilityListener.register();
+        // this.screenVisibilityListener.register();
         AppState.addEventListener("change", this.handleAppStateChange);
     };
 
     private unregisterListener = () => {
-        if (this.screenVisibilityListener) {
-            this.screenVisibilityListener.unregister();
-            this.screenVisibilityListener = null;
-        }
+        // if (this.screenVisibilityListener) {
+        //     this.screenVisibilityListener.unregister();
+        //     this.screenVisibilityListener = null;
+        // }
 
         AppState.removeEventListener("change", this.handleAppStateChange);
     };

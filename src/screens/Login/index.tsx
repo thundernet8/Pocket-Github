@@ -11,7 +11,6 @@ import {
     Icon,
     Spinner
 } from "native-base";
-import { Navigation } from "react-native-navigation";
 import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
 import GlobalStore from "../../store/GlobalStore";
 // import Screen from "../../data/enum/Screen";
@@ -34,8 +33,8 @@ export default class LoginScreen extends React.Component<
         globalStore
             .signIn()
             .then(() => {
-                //
-                Navigation.dismissAllModals();
+                // TODO
+                // Navigation.dismissAllModals();
             })
             .catch(error => {
                 // this.props.navigator.showInAppNotification({

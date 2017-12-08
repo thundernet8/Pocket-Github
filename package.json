@@ -6,24 +6,28 @@
     "author": "wuxueqian <wuxueqian2010@hotmail.com>",
     "license": "MIT",
     "private": true,
-    "keywords": ["Github App", "React-Native"],
+    "keywords": [
+        "Github App",
+        "React-Native"
+    ],
     "scripts": {
         "watch": "tsc -p ./ -w",
-        "build":
-            "rimraf App && tsc && cp ./src/data/graphQL/*.graphql ./App/data/graphQL/",
-        "gql":
-            "cd src/data/graphQL && apollo-codegen generate *.graphql --schema schema.json --target typescript --output types.ts",
+        "build": "rimraf App && tsc && cp ./src/data/graphQL/*.graphql ./App/data/graphQL/",
+        "gql": "cd src/data/graphQL && apollo-codegen generate *.graphql --schema schema.json --target typescript --output types.ts",
         "start": "node node_modules/react-native/local-cli/cli.js start",
         "android": "react-native run-android",
         "ios": "react-native run-ios",
         "release:android": "cd android && ./gradlew assembleRelease",
+        "install:android": "cd android && ./gradlew installRelease",
         "lint": "tslint -e node_modules typings -c .tslintrc.json src/**/*.ts",
         "lint-staged": "lint-staged",
         "lint-staged:ts": "tslint --fix -c .tslintrc.json",
         "test": "jest"
     },
     "lint-staged": {
-        "src/**/*.{ts,tsx}": ["lint-staged:ts"]
+        "src/**/*.{ts,tsx}": [
+            "lint-staged:ts"
+        ]
     },
     "pre-commit": "lint-staged",
     "dependencies": {
@@ -43,9 +47,9 @@
         "react-native": "^0.50.4",
         "react-native-elements": "^0.18.4",
         "react-native-keychain": "^1.2.1",
-        "react-native-navigation": "^1.1.300",
         "react-native-storage": "^0.2.2",
-        "react-native-vector-icons": "^4.4.2"
+        "react-native-vector-icons": "^4.4.2",
+        "react-navigation": "^1.0.0-beta.21"
     },
     "devDependencies": {
         "@types/node": "^8.0.53",

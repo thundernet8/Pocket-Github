@@ -14,6 +14,14 @@ export default class PullRequestsTabScreen extends React.Component<
         super(props);
     }
 
+    componentDidMount() {
+        console.log("componentDidMount");
+    }
+
+    componentWillUnmount() {
+        console.log("componentWillUnmount");
+    }
+
     render() {
         return (
             <View>
