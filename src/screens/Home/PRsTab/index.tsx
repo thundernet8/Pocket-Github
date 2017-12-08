@@ -1,5 +1,15 @@
 import * as React from "react";
-import { View, Text } from "react-native";
+import { Text, StyleSheet } from "react-native";
+import {
+    Container,
+    Header,
+    Left,
+    Body,
+    Button,
+    Icon,
+    Title,
+    Right
+} from "native-base";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
 
 interface PullRequestsTabScreenProps extends IBaseScreenProps {}
@@ -25,9 +35,39 @@ export default class PullRequestsTabScreen extends React.Component<
 
     render() {
         return (
-            <View>
+            <Container style={styles.container}>
+                <Header>
+                    <Left>
+                        <Button
+                            transparent
+                            onPress={() =>
+                                this.props.navigation.navigate("DrawerOpen")
+                            }
+                        >
+                            <Icon name="menu" />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>PullRequests</Title>
+                    </Body>
+                    <Right />
+                </Header>
                 <Text>PullRequestsTabScreen</Text>
-            </View>
+            </Container>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#fafafa",
+        margin: 0,
+        padding: 0
+        // borderWidth: 2,
+        // borderColor: "red"
+        // height: 600
+        // alignItems: "stretch",
+        // paddingBottom: 100
+    }
+});

@@ -15,9 +15,13 @@ interface HomeTabBarProps {
 
 class HomeTabBar extends React.Component<HomeTabBarProps> {
     navigateTab = (tabScreenId: Screen) => {
-        GlobalStore.getInstance().changeHomeTab(tabScreenId);
+        GlobalStore.getInstance().changeScreen(tabScreenId);
         this.props.navigation.navigate(tabScreenId);
     };
+
+    componentDidMount() {
+        GlobalStore.getInstance().changeScreen(Screen.HOMEFeedsTab);
+    }
 
     render() {
         const { navigationState } = this.props;

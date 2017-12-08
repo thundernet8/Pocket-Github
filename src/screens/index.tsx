@@ -9,6 +9,7 @@ import HomeScreen from "./Home";
 import LeftMenuScreen from "./LeftMenu";
 import LoginScreen from "./Login";
 import GlobalStore from "../store/GlobalStore";
+import Screen from "../data/enum/Screen";
 
 const MainDrawerNavigator = DrawerNavigator(
     {
@@ -75,6 +76,7 @@ export default class RootScreen extends React.Component<RootScreenProps> {
                         routeName: "LoginScreenStackNavigator"
                     })
                 );
+                GlobalStore.getInstance().changeScreen(Screen.LOGIN);
             });
     }
 

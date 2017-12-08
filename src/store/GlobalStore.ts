@@ -10,7 +10,7 @@ import ICredential from "../data/interface/ICredential";
 import Screen from "../data/enum/Screen";
 import { meQuery } from "../data/graphQL/types";
 import meQueryTag from "../data/graphQL/meQuery.graphql";
-// import FeedsStore from "../store/FeedsStore";
+import FeedsStore from "../store/FeedsStore";
 
 require("../utils/Promise");
 
@@ -211,11 +211,28 @@ export default class GlobalStore {
     /**
      * Screen and Screen visibility
      */
-    @observable currentHomeTab: Screen = Screen.HOMEFeedsTab;
+    @observable currentScreen: Screen = Screen.HOMEFeedsTab;
+    @observable lastScreen: Screen = null;
 
     @action
-    changeHomeTab = (screen: Screen) => {
-        this.currentHomeTab = screen;
+    changeScreen = (screen: Screen) => {
+        this.lastScreen = this.currentScreen;
+        this.currentScreen = screen;
+        switch (screen) {
+            case Screen.HOMEFeedsTab:
+                FeedsStore.getInstance().maybeInit();
+                break;
+            // TODO
+            default:
+                return;
+        }
+    };
+
+    @action
+    goBackScreen = (screen?: Screen) => {
+        if (screen || this.lastScreen) {
+            this.changeScreen(screen || this.lastScreen);
+        }
     };
 
     // private screenVisibilityListener: RNNScreenVisibilityListener;

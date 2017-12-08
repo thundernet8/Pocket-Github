@@ -132,9 +132,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#fafafa",
         margin: 0,
-        padding: 0,
-        borderWidth: 2,
-        borderColor: "red"
+        padding: 0
+        // borderWidth: 2,
+        // borderColor: "red"
         // height: 600
         // alignItems: "stretch",
         // paddingBottom: 100
