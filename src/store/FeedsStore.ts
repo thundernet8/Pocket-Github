@@ -29,7 +29,7 @@ export default class FeedsStore extends AbstractScreenStore {
         this.loading = true;
         const globalStore = GlobalStore.getInstance();
         globalStore
-            .mePromise()
+            .getMePromise()
             .then(me => {
                 return Request.RestGet<IEvent[]>(
                     `/users/${me.login}/received_events`,

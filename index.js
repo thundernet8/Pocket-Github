@@ -1,4 +1,3 @@
-import { AppRegistry } from "react-native";
-import App from "./src/App";
+import Startup from "./App/Startup";
 
-AppRegistry.registerComponent("PocketGithub", () => App);
+Startup();

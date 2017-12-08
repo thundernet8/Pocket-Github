@@ -1,6 +1,16 @@
 import * as React from "react";
 import { observer } from "mobx-react";
 import { FlatList, View, ActivityIndicator, StyleSheet } from "react-native";
+import {
+    Container,
+    Header,
+    Left,
+    Body,
+    Button,
+    Icon,
+    Title,
+    Right
+} from "native-base";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
 // import GlobalStore from "../../../store/GlobalStore";
 import FeedsStore from "../../../store/FeedsStore";
@@ -16,6 +26,16 @@ export default class FeedsTabScreen extends React.Component<
     FeedsTabScreenProps,
     FeedsTabScreenState
 > {
+    static navigationOptions = {
+        drawerLabel: "Home"
+        // drawerIcon: ({ tintColor }) => (
+        //   <Image
+        //     source={require('./chats-icon.png')}
+        //     style={[styles.icon, {tintColor: tintColor}]}
+        //   />
+        // ),
+    };
+
     private store: FeedsStore;
 
     constructor(props) {
@@ -25,6 +45,7 @@ export default class FeedsTabScreen extends React.Component<
 
     componentDidMount() {
         console.log("componentDidMount");
+        console.log(this.props);
     }
 
     componentWillUnmount() {
@@ -64,7 +85,23 @@ export default class FeedsTabScreen extends React.Component<
         const { events, refreshing, loading } = store;
 
         return (
-            <View style={styles.container}>
+            <Container style={styles.container}>
+                <Header>
+                    <Left>
+                        <Button
+                            transparent
+                            onPress={() =>
+                                this.props.navigation.navigate("DrawerOpen")
+                            }
+                        >
+                            <Icon name="menu" />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Title>Feeds</Title>
+                    </Body>
+                    <Right />
+                </Header>
                 {events.length === 0 &&
                     loading && (
                         <View style={styles.loadingIndicator}>
@@ -85,7 +122,7 @@ export default class FeedsTabScreen extends React.Component<
                         ListFooterComponent={this.renderListFooter}
                     />
                 )}
-            </View>
+            </Container>
         );
     }
 }

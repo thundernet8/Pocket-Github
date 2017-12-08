@@ -15,8 +15,8 @@ export default class LeftMenuScreen extends React.Component<
 
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: "blue", width: 280 }}>
-                <Text style={{ color: "red" }}>LeftMenuScreen</Text>
+            <View style={{ flex: 1, backgroundColor: "#fff", width: 280 }}>
+                <Text style={{ color: "#000" }}>LeftMenuScreen</Text>
             </View>
         );
     }

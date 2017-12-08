@@ -15,7 +15,8 @@ export default class IssuesTabScreen extends React.Component<
     }
 
     componentDidMount() {
-        console.log("componentDidMount");
+        console.log("IssuesTabScreen - componentDidMount");
+        console.log(this.props.navigation.state);
     }
 
     componentWillUnmount() {

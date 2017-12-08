@@ -106,7 +106,7 @@ export default class GlobalStore {
     @computed
     get isLogged() {
         const { credential } = this;
-        return credential && credential.password;
+        return credential && !!credential.password;
     }
 
     @observable isDoingLogin: boolean = false;
@@ -145,9 +145,8 @@ export default class GlobalStore {
             });
         }
 
-        // TODO login
         this.isDoingLogin = true;
-        return this.apollo
+        this.mePromise = this.apollo
             .query<meQuery>({
                 query: gql(meQueryTag),
                 variables: {
@@ -155,7 +154,7 @@ export default class GlobalStore {
                 }
             })
             .then((data: ApolloQueryResult<meQuery>) => {
-                console.log(data);
+                // console.log(data);
                 const viewer = data.data.viewer;
                 this.me = viewer;
                 return viewer;
@@ -167,6 +166,7 @@ export default class GlobalStore {
             .finally(() => {
                 this.isDoingLogin = false;
             });
+        return this.mePromise;
     };
 
     @action
@@ -176,9 +176,11 @@ export default class GlobalStore {
 
     @observable me: meQuery["viewer"];
 
-    public mePromise(): Promise<meQuery["viewer"]> {
-        if (this.me) {
-            return Promise.resolve(this.me);
+    private mePromise: Promise<meQuery["viewer"]>;
+
+    public getMePromise(): Promise<meQuery["viewer"]> {
+        if (this.mePromise) {
+            return this.mePromise;
         }
         return this.signIn();
     }
@@ -209,7 +211,12 @@ export default class GlobalStore {
     /**
      * Screen and Screen visibility
      */
-    @observable currentScreen: Screen = Screen.HOME;
+    @observable currentHomeTab: Screen = Screen.HOMEFeedsTab;
+
+    @action
+    changeHomeTab = (screen: Screen) => {
+        this.currentHomeTab = screen;
+    };
 
     // private screenVisibilityListener: RNNScreenVisibilityListener;
 

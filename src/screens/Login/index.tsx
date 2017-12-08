@@ -35,6 +35,7 @@ export default class LoginScreen extends React.Component<
             .then(() => {
                 // TODO
                 // Navigation.dismissAllModals();
+                this.props.navigation.goBack(null);
             })
             .catch(error => {
                 // this.props.navigator.showInAppNotification({
