@@ -14,39 +14,47 @@ import {
 } from "native-base";
 import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
 
-interface MyProfileScreenProps extends IBaseScreenProps {}
+interface UserScreenProps extends IBaseScreenProps {}
 
-interface MyProfileScreenState {}
+interface UserScreenState {}
 
-export default class MyProfileScreen extends React.Component<
-    MyProfileScreenProps,
-    MyProfileScreenState
+export default class UserScreen extends React.Component<
+    UserScreenProps,
+    UserScreenState
 > {
     constructor(props) {
         super(props);
     }
 
+    componentDidMount() {
+        console.log("mount UserScreen");
+        console.log(this.props);
+    }
+
+    componentWillUnmount() {
+        console.log("unmount UserScreen");
+    }
+
     render() {
+        const { login } = this.props.navigation.state.params;
         return (
             <Container style={styles.container}>
                 <Header>
                     <Left>
                         <Button
                             transparent
-                            onPress={() =>
-                                this.props.navigation.navigate("DrawerOpen")
-                            }
+                            onPress={() => this.props.navigation.goBack(null)}
                         >
-                            <Icon name="menu" />
+                            <Icon name="md-arrow-back" />
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Profile</Title>
+                        <Title>User - {login}</Title>
                     </Body>
                     <Right />
                 </Header>
                 <Content>
-                    <Text>MyProfileScreen</Text>
+                    <Text>UserScreen</Text>
                 </Content>
             </Container>
         );

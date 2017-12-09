@@ -6,21 +6,27 @@ import {
     NavigationActions
 } from "react-navigation";
 import HomeScreen from "./Home";
+// import HomeFeedsTabScreen from "./Home/FeedsTab";
+// import HomeIssuesTabScreen from "./Home/IssuesTab";
+// import HomePullRequestTabScreen from "./Home/PRsTab";
 import LeftMenuScreen from "./LeftMenu";
 import LoginScreen from "./Login";
 import AboutScreen from "./About";
-import MyProfileScreen from "./MyProfile";
-import MyOrgsScreen from "./MyOrgs";
-import MyNoticesScreen from "./MyNotices";
-import MyPinnedScreen from "./MyPinned";
-import MyReposScreen from "./MyRepos";
-import MyGistsScreen from "./MyGists";
-import MyStarredScreen from "./MyStarred";
+// import MyProfileScreen from "./MyProfile";
+// import MyOrgsScreen from "./MyOrgs";
+// import MyNoticesScreen from "./MyNotices";
+// import MyPinnedScreen from "./MyPinned";
+// import MyReposScreen from "./MyRepos";
+// import MyGistsScreen from "./MyGists";
+// import MyStarredScreen from "./MyStarred";
 import SettingsScreen from "./Settings";
-import TrendingScreen from "./Trending";
+// import TrendingScreen from "./Trending";
 import BugReportScreen from "./BugReport";
+// import UserScreen from "./User";
+// import RepoScreen from "./Repository";
 import GlobalStore from "../store/GlobalStore";
 import Screen from "../data/enum/Screen";
+import SharedStackNavigator from "./shareNavigator";
 
 const MainDrawerNavigator = DrawerNavigator(
     {
@@ -28,14 +34,16 @@ const MainDrawerNavigator = DrawerNavigator(
         [Screen.About]: { screen: AboutScreen },
         [Screen.BugReport]: { screen: BugReportScreen },
         [Screen.Settings]: { screen: SettingsScreen },
-        [Screen.Trending]: { screen: TrendingScreen },
-        [Screen.MyProfile]: { screen: MyProfileScreen },
-        [Screen.MyOrgs]: { screen: MyOrgsScreen },
-        [Screen.MyNotices]: { screen: MyNoticesScreen },
-        [Screen.MyPinned]: { screen: MyPinnedScreen },
-        [Screen.MyRepos]: { screen: MyReposScreen },
-        [Screen.MyGists]: { screen: MyGistsScreen },
-        [Screen.MyStarred]: { screen: MyStarredScreen }
+        [Screen.Trending]: { screen: SharedStackNavigator },
+        [Screen.MyProfile]: { screen: SharedStackNavigator },
+        [Screen.MyOrgs]: { screen: SharedStackNavigator },
+        [Screen.MyNotices]: { screen: SharedStackNavigator },
+        [Screen.MyPinned]: { screen: SharedStackNavigator },
+        [Screen.MyRepos]: { screen: SharedStackNavigator },
+        [Screen.MyGists]: { screen: SharedStackNavigator },
+        [Screen.MyStarred]: { screen: SharedStackNavigator },
+        [Screen.User]: { screen: SharedStackNavigator },
+        [Screen.Repo]: { screen: SharedStackNavigator }
     },
     {
         contentComponent: props => <LeftMenuScreen {...props} />

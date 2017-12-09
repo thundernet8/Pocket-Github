@@ -14,39 +14,41 @@ import {
 } from "native-base";
 import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
 
-interface MyProfileScreenProps extends IBaseScreenProps {}
+interface RepoScreenProps extends IBaseScreenProps {
+    name: string;
+}
 
-interface MyProfileScreenState {}
+interface RepoScreenState {}
 
-export default class MyProfileScreen extends React.Component<
-    MyProfileScreenProps,
-    MyProfileScreenState
+export default class RepoScreen extends React.Component<
+    RepoScreenProps,
+    RepoScreenState
 > {
     constructor(props) {
         super(props);
     }
 
     render() {
+        const { name } = this.props.navigation.state.params;
+
         return (
             <Container style={styles.container}>
                 <Header>
                     <Left>
                         <Button
                             transparent
-                            onPress={() =>
-                                this.props.navigation.navigate("DrawerOpen")
-                            }
+                            onPress={() => this.props.navigation.goBack(null)}
                         >
-                            <Icon name="menu" />
+                            <Icon name="md-arrow-back" />
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Profile</Title>
+                        <Title>Repo - ${name}</Title>
                     </Body>
                     <Right />
                 </Header>
                 <Content>
-                    <Text>MyProfileScreen</Text>
+                    <Text>RepoScreen</Text>
                 </Content>
             </Container>
         );

@@ -18,7 +18,11 @@ enum Screen {
     Settings = "screen.Settings",
     Trending = "screen.Trending",
     BugReport = "screen.BugReport",
-    About = "screen.About"
+    About = "screen.About",
+
+    //
+    User = "screen.User",
+    Repo = "screen.Repository"
 }
 
 export default Screen;

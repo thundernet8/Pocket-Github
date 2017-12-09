@@ -12,6 +12,8 @@ import MemberEvent from "./memberEvent";
 
 interface FeedItemProps {
     event: IEvent;
+    pushUserScreen: () => void;
+    pushRepoScreen: () => void;
 }
 
 interface FeedItemState {}
@@ -49,8 +51,19 @@ export default class FeedItem extends React.Component<
     };
 
     render() {
-        const { event } = this.props;
-        console.log("render feed item");
+        const { event, pushUserScreen, pushRepoScreen } = this.props;
+        const showEventTypes = [
+            EventType.Watch,
+            EventType.Create,
+            EventType.Push,
+            EventType.PullRequest,
+            EventType.Fork,
+            EventType.Member
+        ];
+        if (!showEventTypes.includes(event.type)) {
+            return null;
+        }
+
         return (
             <View style={styles.listItem}>
                 {event.actor &&
@@ -61,9 +74,12 @@ export default class FeedItem extends React.Component<
                             medium
                             width={36}
                             height={36}
+                            onPress={pushUserScreen}
                         />
                     )}
-                <View style={styles.text}>{this.renderEvent(event)}</View>
+                <View style={styles.text} onTouchEnd={pushRepoScreen}>
+                    {this.renderEvent(event)}
+                </View>
             </View>
         );
     }

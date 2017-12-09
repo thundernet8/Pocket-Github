@@ -14,13 +14,13 @@ import {
 } from "native-base";
 import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
 
-interface MyPinnedScreenScreenProps extends IBaseScreenProps {}
+interface MyPinnedScreenProps extends IBaseScreenProps {}
 
-interface MyPinnedScreenScreenState {}
+interface MyPinnedScreenState {}
 
-export default class MyPinnedScreenScreen extends React.Component<
-    MyPinnedScreenScreenProps,
-    MyPinnedScreenScreenState
+export default class MyPinnedScreen extends React.Component<
+    MyPinnedScreenProps,
+    MyPinnedScreenState
 > {
     constructor(props) {
         super(props);
@@ -46,7 +46,7 @@ export default class MyPinnedScreenScreen extends React.Component<
                     <Right />
                 </Header>
                 <Content>
-                    <Text>MyPinnedScreenScreen</Text>
+                    <Text>MyPinnedScreen</Text>
                 </Content>
             </Container>
         );

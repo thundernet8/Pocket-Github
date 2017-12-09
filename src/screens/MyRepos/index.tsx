@@ -14,13 +14,13 @@ import {
 } from "native-base";
 import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
 
-interface MyReposScreenScreenProps extends IBaseScreenProps {}
+interface MyReposScreenProps extends IBaseScreenProps {}
 
-interface MyReposScreenScreenState {}
+interface MyReposScreenState {}
 
-export default class MyReposScreenScreen extends React.Component<
-    MyReposScreenScreenProps,
-    MyReposScreenScreenState
+export default class MyReposScreen extends React.Component<
+    MyReposScreenProps,
+    MyReposScreenState
 > {
     constructor(props) {
         super(props);
@@ -46,7 +46,7 @@ export default class MyReposScreenScreen extends React.Component<
                     <Right />
                 </Header>
                 <Content>
-                    <Text>MyReposScreenScreen</Text>
+                    <Text>MyReposScreen</Text>
                 </Content>
             </Container>
         );

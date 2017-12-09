@@ -14,13 +14,13 @@ import {
 } from "native-base";
 import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
 
-interface MyStarredScreenScreenProps extends IBaseScreenProps {}
+interface MyStarredScreenProps extends IBaseScreenProps {}
 
-interface MyStarredScreenScreenState {}
+interface MyStarredScreenState {}
 
-export default class MyStarredScreenScreen extends React.Component<
-    MyStarredScreenScreenProps,
-    MyStarredScreenScreenState
+export default class MyStarredScreen extends React.Component<
+    MyStarredScreenProps,
+    MyStarredScreenState
 > {
     constructor(props) {
         super(props);
@@ -46,7 +46,7 @@ export default class MyStarredScreenScreen extends React.Component<
                     <Right />
                 </Header>
                 <Content>
-                    <Text>MyStarredScreenScreen</Text>
+                    <Text>MyStarredScreen</Text>
                 </Content>
             </Container>
         );

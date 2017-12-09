@@ -14,13 +14,13 @@ import {
 } from "native-base";
 import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
 
-interface SettingsScreenScreenProps extends IBaseScreenProps {}
+interface SettingsScreenProps extends IBaseScreenProps {}
 
-interface SettingsScreenScreenState {}
+interface SettingsScreenState {}
 
-export default class SettingsScreenScreen extends React.Component<
-    SettingsScreenScreenProps,
-    SettingsScreenScreenState
+export default class SettingsScreen extends React.Component<
+    SettingsScreenProps,
+    SettingsScreenState
 > {
     constructor(props) {
         super(props);
@@ -46,7 +46,7 @@ export default class SettingsScreenScreen extends React.Component<
                     <Right />
                 </Header>
                 <Content>
-                    <Text>SettingsScreenScreen</Text>
+                    <Text>SettingsScreen</Text>
                 </Content>
             </Container>
         );

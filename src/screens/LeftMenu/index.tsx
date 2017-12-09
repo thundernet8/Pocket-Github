@@ -19,6 +19,7 @@ import {
 import GlobalStore from "../../store/GlobalStore";
 import Screen from "../../data/enum/Screen";
 import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
+import { sharedScreens } from "../shareNavigator";
 
 interface LeftMenuScreenProps extends IBaseScreenProps {}
 
@@ -57,7 +58,26 @@ export default class LeftMenuScreen extends React.Component<
     };
 
     switchScreen = (screen: Screen) => {
-        this.props.navigation.navigate(screen);
+        if (Object.keys(sharedScreens).includes(screen)) {
+            this.props.navigation.dispatch(
+                NavigationActions.reset({
+                    index: 0,
+                    actions: [
+                        NavigationActions.navigate({
+                            routeName: screen,
+                            params: { index: 0 }
+                        })
+                    ]
+                })
+            );
+        } else {
+            this.props.navigation.navigate(
+                screen,
+                {},
+                NavigationActions.navigate({ routeName: screen })
+            );
+        }
+
         GlobalStore.getInstance().changeScreen(screen);
     };
 
@@ -280,6 +300,7 @@ const styles = StyleSheet.create({
         padding: 0
     },
     header: {
+        marginTop: 20,
         backgroundColor: "#fff",
         height: 100
     },

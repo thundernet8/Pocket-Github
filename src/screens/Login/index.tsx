@@ -62,7 +62,7 @@ export default class LoginScreen extends React.Component<
                                 onChangeText={globalStore.inputUsername}
                             />
                         </Item>
-                        <Item last>
+                        <Item>
                             <Input
                                 placeholder="Password"
                                 onChangeText={globalStore.inputPassword}

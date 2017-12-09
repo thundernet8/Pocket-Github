@@ -12,9 +12,9 @@ export interface INavigator {
 }
 
 export interface INavigation {
-    state: { key: string; routeName: string };
+    state: { key: string; routeName: string; params: any };
     dispatch: (navigateAction: any) => void;
-    navigate: (id: string) => void;
+    navigate: (routeName: string, params?: any, action?: any) => void;
     goBack: (routeName: null | string) => void;
     setParams: (params: any) => void;
 }

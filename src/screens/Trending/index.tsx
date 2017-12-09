@@ -14,13 +14,13 @@ import {
 } from "native-base";
 import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
 
-interface TrendingScreenScreenProps extends IBaseScreenProps {}
+interface TrendingScreenProps extends IBaseScreenProps {}
 
-interface TrendingScreenScreenState {}
+interface TrendingScreenState {}
 
-export default class TrendingScreenScreen extends React.Component<
-    TrendingScreenScreenProps,
-    TrendingScreenScreenState
+export default class TrendingScreen extends React.Component<
+    TrendingScreenProps,
+    TrendingScreenState
 > {
     constructor(props) {
         super(props);
@@ -46,7 +46,7 @@ export default class TrendingScreenScreen extends React.Component<
                     <Right />
                 </Header>
                 <Content>
-                    <Text>TrendingScreenScreen</Text>
+                    <Text>TrendingScreen</Text>
                 </Content>
             </Container>
         );

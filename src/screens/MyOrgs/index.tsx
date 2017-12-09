@@ -14,13 +14,13 @@ import {
 } from "native-base";
 import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
 
-interface MyOrgsScreenScreenProps extends IBaseScreenProps {}
+interface MyOrgsScreenProps extends IBaseScreenProps {}
 
-interface MyOrgsScreenScreenState {}
+interface MyOrgsScreenState {}
 
-export default class MyOrgsScreenScreen extends React.Component<
-    MyOrgsScreenScreenProps,
-    MyOrgsScreenScreenState
+export default class MyOrgsScreen extends React.Component<
+    MyOrgsScreenProps,
+    MyOrgsScreenState
 > {
     constructor(props) {
         super(props);
@@ -46,7 +46,7 @@ export default class MyOrgsScreenScreen extends React.Component<
                     <Right />
                 </Header>
                 <Content>
-                    <Text>MyOrgsScreenScreen</Text>
+                    <Text>MyOrgsScreen</Text>
                 </Content>
             </Container>
         );
