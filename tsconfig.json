@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "allowJs": true,
+        "jsx": "react",
+        "target": "es2015",
+        "lib": ["es2016", "dom"],
+        "module": "es6",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "baseUrl": "./src",
+        "strictNullChecks": false,
+        "noUnusedLocals": true,
+        "outDir": "./App",
+        "types": ["node"],
+        "skipLibCheck": true
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "**/*.spec.ts?", "**/*.d.ts?", "App"],
+    "typeRoots": ["node_modules/@types"]
+}
