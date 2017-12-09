@@ -33,7 +33,8 @@ export default class GlobalStore {
 
     public static dispose = () => {
         if (GlobalStore.instance) {
-            GlobalStore.instance.unregisterListener();
+            const instance = GlobalStore.instance;
+            instance.unregisterListener();
             GlobalStore.instance = null;
         }
     };

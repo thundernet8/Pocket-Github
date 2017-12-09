@@ -1,6 +1,6 @@
-import { INavigator } from "./INavigator";
+import { INavigation } from "./INavigator";
 
 export default interface IBaseScreenProps {
     screenProps: any;
-    navigation: INavigator;
+    navigation: INavigation;
 };

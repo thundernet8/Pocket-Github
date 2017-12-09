@@ -5,11 +5,11 @@ import Screen from "../../data/enum/Screen";
 import FeedsTabScreen from "./FeedsTab";
 import IssuesTabScreen from "./IssuesTab";
 import PullRequestsTabScreen from "./PRsTab";
-import { INavigator, INavigationState } from "../../data/interface/INavigator";
+import { INavigation, INavigationState } from "../../data/interface/INavigator";
 import GlobalStore from "../../store/GlobalStore";
 
 interface HomeTabBarProps {
-    navigation: INavigator;
+    navigation: INavigation;
     navigationState: INavigationState;
 }
 

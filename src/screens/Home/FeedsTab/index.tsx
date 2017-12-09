@@ -118,7 +118,7 @@ export default class FeedsTabScreen extends React.Component<
                         onEndReached={store.loadNextPage}
                         onEndReachedThreshold={0.1}
                         renderItem={this.renderEventItem}
-                        initialNumToRender={30}
+                        initialNumToRender={10}
                         ListFooterComponent={this.renderListFooter}
                     />
                 )}

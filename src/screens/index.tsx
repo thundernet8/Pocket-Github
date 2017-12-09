@@ -8,12 +8,34 @@ import {
 import HomeScreen from "./Home";
 import LeftMenuScreen from "./LeftMenu";
 import LoginScreen from "./Login";
+import AboutScreen from "./About";
+import MyProfileScreen from "./MyProfile";
+import MyOrgsScreen from "./MyOrgs";
+import MyNoticesScreen from "./MyNotices";
+import MyPinnedScreen from "./MyPinned";
+import MyReposScreen from "./MyRepos";
+import MyGistsScreen from "./MyGists";
+import MyStarredScreen from "./MyStarred";
+import SettingsScreen from "./Settings";
+import TrendingScreen from "./Trending";
+import BugReportScreen from "./BugReport";
 import GlobalStore from "../store/GlobalStore";
 import Screen from "../data/enum/Screen";
 
 const MainDrawerNavigator = DrawerNavigator(
     {
-        Home: { screen: HomeScreen }
+        [Screen.HOME]: { screen: HomeScreen },
+        [Screen.About]: { screen: AboutScreen },
+        [Screen.BugReport]: { screen: BugReportScreen },
+        [Screen.Settings]: { screen: SettingsScreen },
+        [Screen.Trending]: { screen: TrendingScreen },
+        [Screen.MyProfile]: { screen: MyProfileScreen },
+        [Screen.MyOrgs]: { screen: MyOrgsScreen },
+        [Screen.MyNotices]: { screen: MyNoticesScreen },
+        [Screen.MyPinned]: { screen: MyPinnedScreen },
+        [Screen.MyRepos]: { screen: MyReposScreen },
+        [Screen.MyGists]: { screen: MyGistsScreen },
+        [Screen.MyStarred]: { screen: MyStarredScreen }
     },
     {
         contentComponent: props => <LeftMenuScreen {...props} />
@@ -22,7 +44,7 @@ const MainDrawerNavigator = DrawerNavigator(
 
 const LoginStackNavigator = StackNavigator(
     {
-        Login: { screen: LoginScreen }
+        [Screen.LOGIN]: { screen: LoginScreen }
     },
     {
         headerMode: "none"
@@ -58,12 +80,13 @@ export default class RootScreen extends React.Component<RootScreenProps> {
     }
 
     componentDidMount() {
-        console.log("RootScreen", this.props);
+        console.log("RootScreen", this.navigator.subs);
         const globalStore = GlobalStore.getInstance();
         globalStore.getMePromise().catch(() => {
             this.navigator.dispatch(
                 NavigationActions.navigate({
-                    routeName: "LoginScreenStackNavigator"
+                    routeName: "LoginScreenStackNavigator",
+                    params: {}
                 })
             );
             GlobalStore.getInstance().changeScreen(Screen.LOGIN);

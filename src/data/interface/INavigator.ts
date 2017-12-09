@@ -1,4 +1,17 @@
 export interface INavigator {
+    dispatch: (navigateAction: any) => void;
+    state: {
+        nav: {
+            index: number;
+            routes: any[];
+        };
+    };
+    subs: {
+        remove: Function;
+    };
+}
+
+export interface INavigation {
     state: { key: string; routeName: string };
     dispatch: (navigateAction: any) => void;
     navigate: (id: string) => void;
