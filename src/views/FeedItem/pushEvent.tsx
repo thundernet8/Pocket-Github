@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { Icon } from "native-base";
 import moment from "moment";
 import IEvent from "../../data/interface/IEvent";
 import { getTimeDiff } from "../../utils/DateTime";
@@ -20,22 +21,19 @@ export default class PushEvent extends React.PureComponent<
     }
 
     renderTitle = (event: IEvent) => {
+        const { repo, payload, actor } = event;
         return (
             <View>
                 <Text style={styles.headTitle}>
+                    {`${actor.display_login} `}
+                    <Text style={{ fontWeight: "bold" }}>pushed</Text>
                     <Text style={{ fontWeight: "bold" }}>
-                        {event.actor.display_login}
-                    </Text>
-                    <Text> pushed to </Text>
-                    <Text style={{ fontWeight: "bold" }}>
-                        {event.payload.ref.replace("refs/heads/", "")}
-                    </Text>
-                    <Text> in </Text>
-                    <Text style={{ fontWeight: "bold" }}>
-                        {event.repo.name}
+                        {` to ${payload.ref.replace("refs/heads/", "")} in ${
+                            repo.name
+                        }`}
                     </Text>
                 </Text>
-                {event.payload.commits.map(commit => {
+                {payload.commits.map(commit => {
                     return (
                         <Text key={commit.sha}>{`${commit.sha.substr(0, 7)} ${
                             commit.message
@@ -47,7 +45,15 @@ export default class PushEvent extends React.PureComponent<
     };
 
     renderMeta = (event: IEvent) => {
-        return <Text>{getTimeDiff(moment(event.created_at))}</Text>;
+        return (
+            <View style={styles.meta}>
+                <Icon
+                    style={{ fontSize: 15, color: "#aaa", marginRight: 10 }}
+                    name="md-git-commit"
+                />
+                <Text>{getTimeDiff(moment(event.created_at))}</Text>
+            </View>
+        );
     };
 
     render() {
@@ -65,5 +71,9 @@ export default class PushEvent extends React.PureComponent<
 const styles = StyleSheet.create({
     headTitle: {
         flexDirection: "row"
+    },
+    meta: {
+        flexDirection: "row",
+        marginTop: 5
     }
 });

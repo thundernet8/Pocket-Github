@@ -8,6 +8,7 @@ import CreateEvent from "./createEvent";
 import PushEvent from "./pushEvent";
 import PullRequestEvent from "./pullRequest";
 import ForkEvent from "./forkEvent";
+import MemberEvent from "./memberEvent";
 
 interface FeedItemProps {
     event: IEvent;
@@ -40,6 +41,8 @@ export default class FeedItem extends React.Component<
                 return <PullRequestEvent event={event} style={styles.text} />;
             case EventType.Fork:
                 return <ForkEvent event={event} style={styles.text} />;
+            case EventType.Member:
+                return <MemberEvent event={event} style={styles.text} />;
             default:
                 return null;
         }

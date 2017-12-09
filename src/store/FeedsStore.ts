@@ -31,6 +31,7 @@ export default class FeedsStore extends AbstractScreenStore {
         globalStore
             .getMePromise()
             .then(me => {
+                console.log("me-", me);
                 return Request.RestGet<IEvent[]>(
                     `/users/${me.login}/received_events`,
                     { page }

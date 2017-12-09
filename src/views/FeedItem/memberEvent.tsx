@@ -5,29 +5,32 @@ import moment from "moment";
 import IEvent from "../../data/interface/IEvent";
 import { getTimeDiff } from "../../utils/DateTime";
 
-interface FormEventProps {
+interface MemberEventProps {
     event: IEvent;
     style?: any;
 }
 
-interface FormEventState {}
+interface MemberEventState {}
 
-export default class FormEvent extends React.PureComponent<
-    FormEventProps,
-    FormEventState
+export default class MemberEvent extends React.PureComponent<
+    MemberEventProps,
+    MemberEventState
 > {
     constructor(props) {
         super(props);
     }
 
     renderTitle = (event: IEvent) => {
-        const { actor, repo } = event;
+        const { payload, actor, repo } = event;
         return (
             <View style={styles.headTitle}>
                 <Text style={{ flexWrap: "wrap" }}>
-                    {`${actor.display_login} `}
-                    <Text style={{ fontWeight: "bold" }}>forked</Text>
-                    {` ${repo.name}`}
+                    {actor.login}
+                    <Text style={{ fontWeight: "bold" }}>{` ${
+                        payload.action
+                    } `}</Text>
+                    {` ${payload.member.login} as a collaborator to `}
+                    <Text style={{ fontWeight: "bold" }}>{repo.name}</Text>
                 </Text>
             </View>
         );
@@ -38,7 +41,7 @@ export default class FormEvent extends React.PureComponent<
             <View style={styles.meta}>
                 <Icon
                     style={{ fontSize: 15, color: "#aaa", marginRight: 10 }}
-                    name="md-git-branch"
+                    name="md-add"
                 />
                 <Text>{getTimeDiff(moment(event.created_at))}</Text>
             </View>

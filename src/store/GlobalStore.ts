@@ -154,7 +154,7 @@ export default class GlobalStore {
                 }
             })
             .then((data: ApolloQueryResult<meQuery>) => {
-                // console.log(data);
+                console.log("me promise resolved");
                 const viewer = data.data.viewer;
                 this.me = viewer;
                 return viewer;
@@ -182,7 +182,14 @@ export default class GlobalStore {
         if (this.mePromise) {
             return this.mePromise;
         }
-        return this.signIn();
+        return this.checkLogin().then(result => {
+            if (result) {
+                this.mePromise = this.signIn();
+                return this.mePromise;
+            } else {
+                throw new Error("");
+            }
+        });
     }
 
     /**

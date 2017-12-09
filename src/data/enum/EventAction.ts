@@ -3,7 +3,9 @@ enum EventAction {
     CREATED = "created",
     // PR
     CLOSED = "closed",
-    OPENED = "opened"
+    OPENED = "opened",
+    // member
+    ADDED = "added"
 }
 
 export default EventAction;

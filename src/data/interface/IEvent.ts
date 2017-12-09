@@ -3,6 +3,7 @@ import EventAction from "../enum/EventAction";
 import Issue from "../interface/Issue";
 import ICommit from "../interface/ICommit";
 import IPullRequest from "../interface/IPullRequest";
+import IMember from "../interface/IMember";
 
 interface IRepo {
     id: number;
@@ -37,7 +38,8 @@ interface IPayload {
     pusher_type?: "user" | ""; // TODO more
     commits: ICommit[];
     pull_request?: IPullRequest;
-    number: number;
+    number?: number;
+    member?: IMember;
 }
 
 export default interface IEvent {
@@ -49,4 +51,4 @@ export default interface IEvent {
     // "public": true,
     created_at: string;
     org: IOrg;
-}
+};

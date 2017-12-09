@@ -60,24 +60,14 @@ export default class RootScreen extends React.Component<RootScreenProps> {
     componentDidMount() {
         console.log("RootScreen", this.props);
         const globalStore = GlobalStore.getInstance();
-        globalStore
-            .checkLogin()
-            .then(result => {
-                if (result) {
-                    // 已有本地credentials直接请求API获取基本信息
-                    return globalStore.signIn();
-                } else {
-                    throw new Error("");
-                }
-            })
-            .catch(() => {
-                this.navigator.dispatch(
-                    NavigationActions.navigate({
-                        routeName: "LoginScreenStackNavigator"
-                    })
-                );
-                GlobalStore.getInstance().changeScreen(Screen.LOGIN);
-            });
+        globalStore.getMePromise().catch(() => {
+            this.navigator.dispatch(
+                NavigationActions.navigate({
+                    routeName: "LoginScreenStackNavigator"
+                })
+            );
+            GlobalStore.getInstance().changeScreen(Screen.LOGIN);
+        });
     }
 
     render() {

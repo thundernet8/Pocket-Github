@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { Icon } from "native-base";
 import moment from "moment";
 import IEvent from "../../data/interface/IEvent";
 import { getTimeDiff } from "../../utils/DateTime";
@@ -20,19 +21,28 @@ export default class CreateEvent extends React.PureComponent<
     }
 
     renderTitle = (event: IEvent) => {
+        const { actor, repo } = event;
         return (
             <View style={styles.headTitle}>
-                <Text style={{ fontWeight: "bold" }}>
-                    {event.actor.display_login}
+                <Text style={{ flexWrap: "wrap" }}>
+                    {`${actor.display_login} `}
+                    <Text style={{ fontWeight: "bold" }}>created</Text>
+                    {` a repository ${repo.name}`}
                 </Text>
-                <Text> created a repository </Text>
-                <Text style={{ fontWeight: "bold" }}>{event.repo.name}</Text>
             </View>
         );
     };
 
     renderMeta = (event: IEvent) => {
-        return <Text>{getTimeDiff(moment(event.created_at))}</Text>;
+        return (
+            <View style={styles.meta}>
+                <Icon
+                    style={{ fontSize: 15, color: "#aaa", marginRight: 10 }}
+                    name="md-albums"
+                />
+                <Text>{getTimeDiff(moment(event.created_at))}</Text>
+            </View>
+        );
     };
 
     render() {
@@ -50,5 +60,9 @@ export default class CreateEvent extends React.PureComponent<
 const styles = StyleSheet.create({
     headTitle: {
         flexDirection: "row"
+    },
+    meta: {
+        flexDirection: "row",
+        marginTop: 5
     }
 });

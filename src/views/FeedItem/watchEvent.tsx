@@ -1,5 +1,6 @@
 import * as React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import { Icon } from "native-base";
 import moment from "moment";
 import EventAction from "../../data/enum/EventAction";
 import IEvent from "../../data/interface/IEvent";
@@ -21,24 +22,43 @@ export default class WatchEvent extends React.PureComponent<
     }
 
     renderTitle = (event: IEvent) => {
-        switch (event.payload.action) {
+        const { payload, actor, repo } = event;
+        switch (payload.action) {
             case EventAction.STARTED:
                 return (
                     <View style={styles.headTitle}>
-                        <Text style={{ fontWeight: "600", flexWrap: "wrap" }}>
-                            <Text>{event.actor.display_login}</Text>
-                            <Text style={{ fontWeight: "200" }}> starred </Text>
-                            {event.repo.name}
+                        <Text style={{ flexWrap: "wrap" }}>
+                            {`${actor.display_login} `}
+                            <Text style={{ fontWeight: "bold" }}>starred</Text>
+                            {` ${repo.name}`}
                         </Text>
                     </View>
                 );
             default:
-                return <Text>{event.payload.action}</Text>;
+                return <Text>{payload.action}</Text>;
         }
     };
 
     renderMeta = (event: IEvent) => {
-        return <Text>{getTimeDiff(moment(event.created_at))}</Text>;
+        let icon = "";
+        switch (event.payload.action) {
+            case EventAction.STARTED:
+                icon = "md-star";
+                break;
+            default:
+                return;
+        }
+        return (
+            <View style={styles.meta}>
+                {icon && (
+                    <Icon
+                        style={{ fontSize: 15, color: "#aaa", marginRight: 10 }}
+                        name={icon}
+                    />
+                )}
+                <Text>{getTimeDiff(moment(event.created_at))}</Text>
+            </View>
+        );
     };
 
     render() {
@@ -56,5 +76,9 @@ export default class WatchEvent extends React.PureComponent<
 const styles = StyleSheet.create({
     headTitle: {
         flexDirection: "row"
+    },
+    meta: {
+        flexDirection: "row",
+        marginTop: 5
     }
 });
