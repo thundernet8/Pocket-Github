@@ -71,6 +71,7 @@ export default class FeedsTabScreen extends React.Component<
     componentDidMount() {
         console.log("componentDidMount");
         console.log(this.props);
+        FeedsStore.getInstance().maybeInit();
     }
 
     componentWillUnmount() {

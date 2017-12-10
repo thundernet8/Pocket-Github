@@ -227,16 +227,6 @@ export default class GlobalStore {
     changeScreen = (screen: Screen) => {
         this.lastScreen = this.currentScreen;
         this.currentScreen = screen;
-        switch (screen) {
-            case Screen.HOMEFeedsTab:
-                FeedsStore.getInstance().maybeInit();
-                break;
-            case Screen.HOMEIssuesTab:
-                IssuesStore.getInstance().maybeInit();
-                break;
-            default:
-                return;
-        }
     };
 
     @action
