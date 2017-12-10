@@ -11,7 +11,10 @@ import {
     Title,
     Right,
     Content,
-    Text
+    Text,
+    TabHeading,
+    Tab,
+    Tabs
 } from "native-base";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
 import IssuesStore from "../../../store/IssuesStore";
@@ -67,7 +70,7 @@ export default class IssuesTabScreen extends React.Component<
         const { issueList, isLoading, isRefreshing } = store;
         return (
             <Container style={styles.container}>
-                <Header>
+                <Header hasTabs>
                     <Left>
                         <Button
                             transparent
@@ -83,6 +86,60 @@ export default class IssuesTabScreen extends React.Component<
                     </Body>
                     <Right />
                 </Header>
+                <Tabs initialPage={1}>
+                    <Tab
+                        heading={
+                            (
+                                <TabHeading>
+                                    <Text>CREATED</Text>
+                                </TabHeading>
+                            ) as any
+                        }
+                    >
+                        <View>
+                            <Text>Tab1</Text>
+                        </View>
+                    </Tab>
+                    <Tab
+                        heading={
+                            (
+                                <TabHeading>
+                                    <Text>ASSIGNED</Text>
+                                </TabHeading>
+                            ) as any
+                        }
+                    >
+                        <View>
+                            <Text>Tab2</Text>
+                        </View>
+                    </Tab>
+                    <Tab
+                        heading={
+                            (
+                                <TabHeading>
+                                    <Text>MENTIONED</Text>
+                                </TabHeading>
+                            ) as any
+                        }
+                    >
+                        <View>
+                            <Text>Tab3</Text>
+                        </View>
+                    </Tab>
+                    <Tab
+                        heading={
+                            (
+                                <TabHeading>
+                                    <Text>SUBSCRIBED</Text>
+                                </TabHeading>
+                            ) as any
+                        }
+                    >
+                        <View>
+                            <Text>Tab4</Text>
+                        </View>
+                    </Tab>
+                </Tabs>
                 <Content>
                     {issueList.length === 0 &&
                         isLoading && (
