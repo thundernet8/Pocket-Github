@@ -23,7 +23,7 @@ export default interface Issue {
     closed_at: string;
     author_association: "OWNER" | "NONE" | ""; // TODO
     body: string;
-}
+};
 
 export interface IssueLabel {
     id: number;

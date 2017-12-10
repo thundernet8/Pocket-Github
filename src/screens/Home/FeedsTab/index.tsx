@@ -60,7 +60,7 @@ export default class FeedsTabScreen extends React.Component<
                 index: 0,
                 actions: [
                     NavigationActions.navigate({
-                        routeName: Screen.User,
+                        routeName: Screen.Repo,
                         params: { index: 0, name: event.repo.name }
                     })
                 ]
@@ -129,7 +129,7 @@ export default class FeedsTabScreen extends React.Component<
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Feeds</Title>
+                        <Title>PocketGithub</Title>
                     </Body>
                     <Right />
                 </Header>

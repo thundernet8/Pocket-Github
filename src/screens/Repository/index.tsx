@@ -43,7 +43,7 @@ export default class RepoScreen extends React.Component<
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Repo - ${name}</Title>
+                        <Title>Repo - {name}</Title>
                     </Body>
                     <Right />
                 </Header>

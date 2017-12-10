@@ -48,7 +48,7 @@ export default class PullRequestsTabScreen extends React.Component<
                         </Button>
                     </Left>
                     <Body>
-                        <Title>PullRequests</Title>
+                        <Title>PocketGithub</Title>
                     </Body>
                     <Right />
                 </Header>

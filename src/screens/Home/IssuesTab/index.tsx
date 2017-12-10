@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Text, StyleSheet } from "react-native";
+import { observer } from "mobx-react";
+import { StyleSheet, ActivityIndicator, FlatList, View } from "react-native";
 import {
     Container,
     Header,
@@ -8,20 +9,28 @@ import {
     Button,
     Icon,
     Title,
-    Right
+    Right,
+    Content,
+    Text
 } from "native-base";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
+import IssuesStore from "../../../store/IssuesStore";
+import Issue from "../../../data/interface/Issue";
 
 interface IssuesTabScreenProps extends IBaseScreenProps {}
 
 interface IssuesTabScreenState {}
 
+@observer
 export default class IssuesTabScreen extends React.Component<
     IssuesTabScreenProps,
     IssuesTabScreenState
 > {
+    private store: IssuesStore;
+
     constructor(props) {
         super(props);
+        this.store = IssuesStore.getInstance();
     }
 
     componentDidMount() {
@@ -33,7 +42,29 @@ export default class IssuesTabScreen extends React.Component<
         console.log("componentWillUnmount");
     }
 
+    renderIssueItem = ({ item }: { item: Issue }) => {
+        return (
+            <View>
+                <Text>{item.title}</Text>
+            </View>
+        );
+    };
+
+    renderListFooter = () => {
+        const { isLoadingMore } = this.store;
+        if (!isLoadingMore) {
+            return null;
+        }
+        return (
+            <View style={styles.listFooter}>
+                <ActivityIndicator animating size="small" />
+            </View>
+        );
+    };
+
     render() {
+        const { store } = this;
+        const { issueList, isLoading, isRefreshing } = store;
         return (
             <Container style={styles.container}>
                 <Header>
@@ -48,11 +79,32 @@ export default class IssuesTabScreen extends React.Component<
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Issues</Title>
+                        <Title>PocketGithub</Title>
                     </Body>
                     <Right />
                 </Header>
-                <Text>IssuesTabScreen</Text>
+                <Content>
+                    {issueList.length === 0 &&
+                        isLoading && (
+                            <View style={styles.loadingIndicator}>
+                                <ActivityIndicator size="large" />
+                            </View>
+                        )}
+                    {issueList.length > 0 && (
+                        <FlatList
+                            keyExtractor={item => item.id}
+                            style={styles.flatList}
+                            data={issueList}
+                            refreshing={isRefreshing}
+                            onRefresh={store.refresh}
+                            onEndReached={store.loadNextPage}
+                            onEndReachedThreshold={0.1}
+                            renderItem={this.renderIssueItem}
+                            initialNumToRender={10}
+                            ListFooterComponent={this.renderListFooter}
+                        />
+                    )}
+                </Content>
             </Container>
         );
     }
@@ -69,5 +121,19 @@ const styles = StyleSheet.create({
         // height: 600
         // alignItems: "stretch",
         // paddingBottom: 100
+    },
+    loadingIndicator: {
+        paddingVertical: 20
+    },
+    flatList: {
+        // height: 5000
+        flex: 1
+        // backgroundColor: "blue"
+    },
+    listFooter: {
+        paddingVertical: 20
+    },
+    listItem: {
+        paddingVertical: 10
     }
 });

@@ -11,6 +11,7 @@ import Screen from "../data/enum/Screen";
 import { meQuery } from "../data/graphQL/types";
 import meQueryTag from "../data/graphQL/meQuery.graphql";
 import FeedsStore from "../store/FeedsStore";
+import IssuesStore from "../store/IssuesStore";
 
 require("../utils/Promise");
 
@@ -230,7 +231,9 @@ export default class GlobalStore {
             case Screen.HOMEFeedsTab:
                 FeedsStore.getInstance().maybeInit();
                 break;
-            // TODO
+            case Screen.HOMEIssuesTab:
+                IssuesStore.getInstance().maybeInit();
+                break;
             default:
                 return;
         }
