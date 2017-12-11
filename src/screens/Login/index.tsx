@@ -33,8 +33,6 @@ export default class LoginScreen extends React.Component<
         globalStore
             .signIn()
             .then(() => {
-                // TODO
-                // Navigation.dismissAllModals();
                 this.props.navigation.goBack(null);
                 GlobalStore.getInstance().goBackScreen();
             })

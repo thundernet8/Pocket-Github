@@ -81,6 +81,17 @@ export default class IssuesStore extends AbstractScreenStore {
      */
     @observable currentFilter: IssueFilter = IssueFilter.CREATED;
 
+    @action
+    changeFilter = (index: number) => {
+        this.currentFilter = IssueFilter[IssueFilter[index]];
+        if (
+            (!this.issueList || this.issueList.length === 0) &&
+            this.hasMoreIssues[this.currentFilter]
+        ) {
+            this.loadData();
+        }
+    };
+
     /**
      * State
      */

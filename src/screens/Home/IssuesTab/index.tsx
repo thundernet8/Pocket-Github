@@ -38,13 +38,11 @@ export default class IssuesTabScreen extends React.Component<
     }
 
     onChangeTab = ({ i, ref, from }) => {
-        // BUG not work
-        console.log("index-", i, ref, from);
+        this.store.changeFilter(i);
     };
 
     componentDidMount() {
         console.log("IssuesTabScreen - componentDidMount");
-        IssuesStore.getInstance().maybeInit();
     }
 
     componentWillUnmount() {

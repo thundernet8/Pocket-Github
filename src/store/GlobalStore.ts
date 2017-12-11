@@ -9,6 +9,8 @@ import ICredential from "../data/interface/ICredential";
 import Screen from "../data/enum/Screen";
 import { meQuery } from "../data/graphQL/types";
 import meQueryTag from "../data/graphQL/meQuery.graphql";
+import FeedsStore from "../store/FeedsStore";
+import IssuesStore from "../store/IssuesStore";
 import * as Keychain from "react-native-keychain";
 
 require("../utils/Promise");
@@ -225,6 +227,17 @@ export default class GlobalStore {
     changeScreen = (screen: Screen) => {
         this.lastScreen = this.currentScreen;
         this.currentScreen = screen;
+        switch (screen) {
+            case Screen.HOMEFeedsTab:
+                FeedsStore.getInstance().maybeInit();
+                break;
+            case Screen.HOMEIssuesTab:
+                IssuesStore.getInstance().maybeInit();
+                break;
+            // TODO more
+            default:
+                return;
+        }
     };
 
     @action
