@@ -5,12 +5,11 @@ import { HttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { InMemoryCache, NormalizedCacheObject } from "apollo-cache-inmemory";
 import gql from "graphql-tag";
-import * as Keychain from "react-native-keychain";
 import ICredential from "../data/interface/ICredential";
 import Screen from "../data/enum/Screen";
 import { meQuery } from "../data/graphQL/types";
 import meQueryTag from "../data/graphQL/meQuery.graphql";
-import FeedsStore from "../store/FeedsStore";
+import * as Keychain from "react-native-keychain";
 
 require("../utils/Promise");
 
@@ -33,7 +32,8 @@ export default class GlobalStore {
 
     public static dispose = () => {
         if (GlobalStore.instance) {
-            GlobalStore.instance.unregisterListener();
+            const instance = GlobalStore.instance;
+            instance.unregisterListener();
             GlobalStore.instance = null;
         }
     };
@@ -225,14 +225,6 @@ export default class GlobalStore {
     changeScreen = (screen: Screen) => {
         this.lastScreen = this.currentScreen;
         this.currentScreen = screen;
-        switch (screen) {
-            case Screen.HOMEFeedsTab:
-                FeedsStore.getInstance().maybeInit();
-                break;
-            // TODO
-            default:
-                return;
-        }
     };
 
     @action

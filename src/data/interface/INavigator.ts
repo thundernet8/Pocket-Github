@@ -1,7 +1,20 @@
 export interface INavigator {
-    state: { key: string; routeName: string };
     dispatch: (navigateAction: any) => void;
-    navigate: (id: string) => void;
+    state: {
+        nav: {
+            index: number;
+            routes: any[];
+        };
+    };
+    subs: {
+        remove: Function;
+    };
+}
+
+export interface INavigation {
+    state: { key: string; routeName: string; params: any };
+    dispatch: (navigateAction: any) => void;
+    navigate: (routeName: string, params?: any, action?: any) => void;
     goBack: (routeName: null | string) => void;
     setParams: (params: any) => void;
 }

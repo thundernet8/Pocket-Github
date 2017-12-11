@@ -11,11 +11,12 @@ import {
     Title,
     Right
 } from "native-base";
+import { NavigationActions } from "react-navigation";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
-// import GlobalStore from "../../../store/GlobalStore";
 import FeedsStore from "../../../store/FeedsStore";
 import IEvent from "../../../data/interface/IEvent";
 import FeedItemView from "../../../views/FeedItem";
+import Screen from "../../../data/enum/Screen";
 
 interface FeedsTabScreenProps extends IBaseScreenProps {}
 
@@ -26,16 +27,6 @@ export default class FeedsTabScreen extends React.Component<
     FeedsTabScreenProps,
     FeedsTabScreenState
 > {
-    static navigationOptions = {
-        drawerLabel: "Home"
-        // drawerIcon: ({ tintColor }) => (
-        //   <Image
-        //     source={require('./chats-icon.png')}
-        //     style={[styles.icon, {tintColor: tintColor}]}
-        //   />
-        // ),
-    };
-
     private store: FeedsStore;
 
     constructor(props) {
@@ -43,9 +34,44 @@ export default class FeedsTabScreen extends React.Component<
         this.store = FeedsStore.getInstance();
     }
 
+    pushUserScreen = (event: IEvent) => {
+        // this.props.navigation.navigate(Screen.User, {
+        //     login: event.actor.login
+        // });
+        this.props.navigation.dispatch(
+            NavigationActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: Screen.User,
+                        params: { index: 0, login: event.actor.login }
+                    })
+                ]
+            })
+        );
+    };
+
+    pushRepoScreen = (event: IEvent) => {
+        // this.props.navigation.navigate(Screen.Repo, {
+        //     name: event.repo.name
+        // });
+        this.props.navigation.dispatch(
+            NavigationActions.reset({
+                index: 0,
+                actions: [
+                    NavigationActions.navigate({
+                        routeName: Screen.Repo,
+                        params: { index: 0, name: event.repo.name }
+                    })
+                ]
+            })
+        );
+    };
+
     componentDidMount() {
         console.log("componentDidMount");
         console.log(this.props);
+        FeedsStore.getInstance().maybeInit();
     }
 
     componentWillUnmount() {
@@ -53,7 +79,13 @@ export default class FeedsTabScreen extends React.Component<
     }
 
     renderEventItem = ({ item }: { item: IEvent }) => {
-        return <FeedItemView event={item} />;
+        return (
+            <FeedItemView
+                event={item}
+                pushUserScreen={this.pushUserScreen.bind(this, item)}
+                pushRepoScreen={this.pushRepoScreen.bind(this, item)}
+            />
+        );
     };
 
     renderListHeader = () => {
@@ -98,7 +130,7 @@ export default class FeedsTabScreen extends React.Component<
                         </Button>
                     </Left>
                     <Body>
-                        <Title>Feeds</Title>
+                        <Title>PocketGithub</Title>
                     </Body>
                     <Right />
                 </Header>
@@ -118,7 +150,7 @@ export default class FeedsTabScreen extends React.Component<
                         onEndReached={store.loadNextPage}
                         onEndReachedThreshold={0.1}
                         renderItem={this.renderEventItem}
-                        initialNumToRender={30}
+                        initialNumToRender={10}
                         ListFooterComponent={this.renderListFooter}
                     />
                 )}

@@ -5,23 +5,17 @@ import Screen from "../../data/enum/Screen";
 import FeedsTabScreen from "./FeedsTab";
 import IssuesTabScreen from "./IssuesTab";
 import PullRequestsTabScreen from "./PRsTab";
-import { INavigator, INavigationState } from "../../data/interface/INavigator";
-import GlobalStore from "../../store/GlobalStore";
+import { INavigation, INavigationState } from "../../data/interface/INavigator";
 
 interface HomeTabBarProps {
-    navigation: INavigator;
+    navigation: INavigation;
     navigationState: INavigationState;
 }
 
 class HomeTabBar extends React.Component<HomeTabBarProps> {
     navigateTab = (tabScreenId: Screen) => {
-        GlobalStore.getInstance().changeScreen(tabScreenId);
         this.props.navigation.navigate(tabScreenId);
     };
-
-    componentDidMount() {
-        GlobalStore.getInstance().changeScreen(Screen.HOMEFeedsTab);
-    }
 
     render() {
         const { navigationState } = this.props;

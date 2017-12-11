@@ -49,7 +49,7 @@ function Request<T>(
         })
         .then<T>(resp => {
             if (__DEV__) {
-                console.log(resp);
+                // console.log(resp);
             }
             if (resp.status >= 400) {
                 throw new Error(resp.data);

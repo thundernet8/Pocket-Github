@@ -1,36 +1,29 @@
 import * as React from "react";
-import { Text, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import {
     Container,
     Header,
     Left,
     Body,
+    Content,
     Button,
     Icon,
     Title,
-    Right
+    Right,
+    Text
 } from "native-base";
-import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
+import IBaseScreenProps from "../../data/interface/IBaseScreenProps";
 
-interface PullRequestsTabScreenProps extends IBaseScreenProps {}
+interface SettingsScreenProps extends IBaseScreenProps {}
 
-interface PullRequestsTabScreenState {}
+interface SettingsScreenState {}
 
-export default class PullRequestsTabScreen extends React.Component<
-    PullRequestsTabScreenProps,
-    PullRequestsTabScreenState
+export default class SettingsScreen extends React.Component<
+    SettingsScreenProps,
+    SettingsScreenState
 > {
     constructor(props) {
         super(props);
-    }
-
-    componentDidMount() {
-        console.log("PullRequestsTabScreen - componentDidMount");
-        console.log(this.props.navigation.state);
-    }
-
-    componentWillUnmount() {
-        console.log("componentWillUnmount");
     }
 
     render() {
@@ -48,11 +41,13 @@ export default class PullRequestsTabScreen extends React.Component<
                         </Button>
                     </Left>
                     <Body>
-                        <Title>PocketGithub</Title>
+                        <Title>Settings</Title>
                     </Body>
                     <Right />
                 </Header>
-                <Text>PullRequestsTabScreen</Text>
+                <Content>
+                    <Text>SettingsScreen</Text>
+                </Content>
             </Container>
         );
     }
@@ -64,10 +59,5 @@ const styles = StyleSheet.create({
         backgroundColor: "#fafafa",
         margin: 0,
         padding: 0
-        // borderWidth: 2,
-        // borderColor: "red"
-        // height: 600
-        // alignItems: "stretch",
-        // paddingBottom: 100
     }
 });
