@@ -12,13 +12,14 @@ import {
     Right,
     Content,
     Text,
-    TabHeading,
     Tab,
-    Tabs
+    Tabs,
+    ScrollableTab
 } from "native-base";
 import IBaseScreenProps from "../../../data/interface/IBaseScreenProps";
 import IssuesStore from "../../../store/IssuesStore";
 import Issue from "../../../data/interface/Issue";
+import { IssueFilter } from "../../../data/enum/Issue";
 
 interface IssuesTabScreenProps extends IBaseScreenProps {}
 
@@ -35,6 +36,11 @@ export default class IssuesTabScreen extends React.Component<
         super(props);
         this.store = IssuesStore.getInstance();
     }
+
+    onChangeTab = ({ i, ref, from }) => {
+        // BUG not work
+        console.log("index-", i, ref, from);
+    };
 
     componentDidMount() {
         console.log("IssuesTabScreen - componentDidMount");
@@ -65,9 +71,40 @@ export default class IssuesTabScreen extends React.Component<
         );
     };
 
-    render() {
+    renderTabContent = (tab: IssueFilter) => {
         const { store } = this;
-        const { issueList, isLoading, isRefreshing } = store;
+        const { issues, loading, refreshing } = store;
+        const issueList = issues[tab];
+        const isLoading = loading[tab];
+        const isRefreshing = refreshing[tab];
+
+        return (
+            <Content>
+                {issueList.length === 0 &&
+                    isLoading && (
+                        <View style={styles.loadingIndicator}>
+                            <ActivityIndicator size="large" />
+                        </View>
+                    )}
+                {issueList.length > 0 && (
+                    <FlatList
+                        keyExtractor={item => item.id}
+                        style={styles.flatList}
+                        data={issueList}
+                        refreshing={isRefreshing}
+                        onRefresh={store.refresh}
+                        onEndReached={store.loadNextPage}
+                        onEndReachedThreshold={0.1}
+                        renderItem={this.renderIssueItem}
+                        initialNumToRender={10}
+                        ListFooterComponent={this.renderListFooter}
+                    />
+                )}
+            </Content>
+        );
+    };
+
+    render() {
         return (
             <Container style={styles.container}>
                 <Header hasTabs>
@@ -86,82 +123,24 @@ export default class IssuesTabScreen extends React.Component<
                     </Body>
                     <Right />
                 </Header>
-                <Tabs initialPage={1}>
-                    <Tab
-                        heading={
-                            (
-                                <TabHeading>
-                                    <Text>CREATED</Text>
-                                </TabHeading>
-                            ) as any
-                        }
-                    >
-                        <View>
-                            <Text>Tab1</Text>
-                        </View>
+                <Tabs
+                    onChangeTab={this.onChangeTab}
+                    initialPage={0}
+                    renderTabBar={() => <ScrollableTab />}
+                >
+                    <Tab heading={"CREATED" as any}>
+                        {this.renderTabContent(IssueFilter.CREATED)}
                     </Tab>
-                    <Tab
-                        heading={
-                            (
-                                <TabHeading>
-                                    <Text>ASSIGNED</Text>
-                                </TabHeading>
-                            ) as any
-                        }
-                    >
-                        <View>
-                            <Text>Tab2</Text>
-                        </View>
+                    <Tab heading={"ASSIGNED" as any}>
+                        {this.renderTabContent(IssueFilter.ASSIGNED)}
                     </Tab>
-                    <Tab
-                        heading={
-                            (
-                                <TabHeading>
-                                    <Text>MENTIONED</Text>
-                                </TabHeading>
-                            ) as any
-                        }
-                    >
-                        <View>
-                            <Text>Tab3</Text>
-                        </View>
+                    <Tab heading={"MENTIONED" as any}>
+                        {this.renderTabContent(IssueFilter.MENTIONED)}
                     </Tab>
-                    <Tab
-                        heading={
-                            (
-                                <TabHeading>
-                                    <Text>SUBSCRIBED</Text>
-                                </TabHeading>
-                            ) as any
-                        }
-                    >
-                        <View>
-                            <Text>Tab4</Text>
-                        </View>
+                    <Tab heading={"SUBSCRIBED" as any}>
+                        {this.renderTabContent(IssueFilter.SUBSCRIBED)}
                     </Tab>
                 </Tabs>
-                <Content>
-                    {issueList.length === 0 &&
-                        isLoading && (
-                            <View style={styles.loadingIndicator}>
-                                <ActivityIndicator size="large" />
-                            </View>
-                        )}
-                    {issueList.length > 0 && (
-                        <FlatList
-                            keyExtractor={item => item.id}
-                            style={styles.flatList}
-                            data={issueList}
-                            refreshing={isRefreshing}
-                            onRefresh={store.refresh}
-                            onEndReached={store.loadNextPage}
-                            onEndReachedThreshold={0.1}
-                            renderItem={this.renderIssueItem}
-                            initialNumToRender={10}
-                            ListFooterComponent={this.renderListFooter}
-                        />
-                    )}
-                </Content>
             </Container>
         );
     }
@@ -173,19 +152,12 @@ const styles = StyleSheet.create({
         backgroundColor: "#fafafa",
         margin: 0,
         padding: 0
-        // borderWidth: 2,
-        // borderColor: "red"
-        // height: 600
-        // alignItems: "stretch",
-        // paddingBottom: 100
     },
     loadingIndicator: {
         paddingVertical: 20
     },
     flatList: {
-        // height: 5000
         flex: 1
-        // backgroundColor: "blue"
     },
     listFooter: {
         paddingVertical: 20
