@@ -6,6 +6,7 @@ import FeedsTabScreen from "./FeedsTab";
 import IssuesTabScreen from "./IssuesTab";
 import PullRequestsTabScreen from "./PRsTab";
 import { INavigation, INavigationState } from "../../data/interface/INavigator";
+import GlobalStore from "../../store/GlobalStore";
 
 interface HomeTabBarProps {
     navigation: INavigation;
@@ -14,8 +15,13 @@ interface HomeTabBarProps {
 
 class HomeTabBar extends React.Component<HomeTabBarProps> {
     navigateTab = (tabScreenId: Screen) => {
+        GlobalStore.getInstance().changeScreen(tabScreenId);
         this.props.navigation.navigate(tabScreenId);
     };
+
+    componentDidMount() {
+        GlobalStore.getInstance().changeScreen(Screen.HOMEFeedsTab);
+    }
 
     render() {
         const { navigationState } = this.props;
